@@ -94,12 +94,17 @@ class TourPackage extends Model
     }
 
     public function promotions(): BelongsToMany
-    {
-        return $this->belongsToMany(Promotion::class, 'promotion_tour_packages');
-    }
+{
+    return $this->belongsToMany(Promotion::class, 'promotion_tour_packages');
+}
 
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
+public function getRouteKeyName(): string
+{
+    return 'slug';
+}
+
+public function scopeActive($query)
+{
+    return $query->where('is_active', true);
+}
 }

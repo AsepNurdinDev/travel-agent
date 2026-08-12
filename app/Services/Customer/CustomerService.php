@@ -11,7 +11,7 @@ class CustomerService
      */
     public function findOrCreateByEmail(array $data): Customer
     {
-        return Customer::query()->firstOrCreate(
+        $customer = Customer::query()->firstOrCreate(
             ['email' => $data['email']],
             [
                 'name' => $data['name'],
@@ -22,5 +22,16 @@ class CustomerService
                 'user_id' => $data['user_id'] ?? null,
             ]
         );
+
+        if (
+            ! $customer->user_id &&
+            ! empty($data['user_id'])
+        ) {
+            $customer->update([
+                'user_id' => $data['user_id'],
+            ]);
+        }
+
+        return $customer->fresh();
     }
 }

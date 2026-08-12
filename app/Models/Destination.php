@@ -28,6 +28,11 @@ class Destination extends Model
         ];
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function tourPackages(): HasMany
     {
         return $this->hasMany(TourPackage::class);

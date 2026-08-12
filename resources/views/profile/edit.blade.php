@@ -1,28 +1,20 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+<x-app-layout title="Account Settings">
+    <div class="container-page py-10 max-w-2xl">
+        <p class="section-eyebrow">Security</p>
+        <h1 class="section-title !text-2xl">Account Settings</h1>
+        <p class="mt-2 text-sm text-muted">Manage your login email and password. For phone, address and other travel details, visit your <a href="{{ route('account.profile') }}" class="text-primary font-medium hover:underline">Profile</a>.</p>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+        <div class="mt-8 space-y-6">
+            <div class="card p-6 sm:p-8">
+                @include('profile.partials.update-profile-information-form')
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
+            <div class="card p-6 sm:p-8">
+                @include('profile.partials.update-password-form')
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+            <div class="card p-6 sm:p-8">
+                @include('profile.partials.delete-user-form')
             </div>
         </div>
     </div>

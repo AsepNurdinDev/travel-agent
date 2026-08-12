@@ -41,6 +41,11 @@ class BlogPost extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function getRouteKeyName(): string
+{
+    return 'slug';
+}
+
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
