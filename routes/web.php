@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking/estimate', [BookingController::class, 'estimate'])->name('booking.estimate');
     Route::post('/booking/{availability}', [BookingController::class, 'store'])->name('booking.store');
     Route::get('/booking/{booking}/checkout', [BookingController::class, 'checkout'])->name('booking.checkout');
-    Route::post('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
+    Route::post('/booking/{booking}/payment', [BookingController::class, 'pay'])->name('booking.pay');
     Route::get('/booking/{booking}/success', [BookingController::class, 'success'])->name('booking.success');
 
     /*

@@ -19,6 +19,30 @@ class BookingSeeder extends Seeder
             return;
         }
 
+        $testCustomer = Customer::query()->where('email', 'customer@example.com')->first();
+
+        if ($testCustomer) {
+            foreach ($availabilities->random(min(2, $availabilities->count()))->all() as $availability) {
+                if ($availability->remaining_quota < 2) {
+                    continue;
+                }
+
+                try {
+                    $bookingService->createBooking(
+                        customer: $testCustomer,
+                        availability: $availability,
+                        adultCount: 2,
+                        childCount: 0,
+                        infantCount: 0,
+                    );
+                } catch (\Throwable) {
+                    continue;
+                }
+
+                $availability->refresh();
+            }
+        }
+
         foreach (range(1, 20) as $i) {
             $availability = $availabilities->random();
             $customer = $customers->random();

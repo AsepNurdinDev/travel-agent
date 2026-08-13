@@ -75,3 +75,24 @@ Admin	admin@travelagent.test	password
 Sales Staff	sales@travelagent.test	password
 Finance Staff	finance@travelagent.test	password
 Content Manager	content@travelagent.test	password
+Test Customer (frontend login)	customer@example.com	password
+
+2026-08-12 follow-up fixes:
+- CustomerSeeder now also creates the "Test Customer" account above: a real
+  User -> Customer link (not just one of the 24 random unlinked customers),
+  so the register/login/dashboard/bookings/invoices flow can be exercised
+  immediately after seeding without registering a new account by hand.
+- BookingSeeder guarantees that test customer gets 1-2 real bookings (via
+  BookingService, same as everything else) so account.dashboard /
+  account.bookings / account.invoices aren't empty for that login.
+- Fixed routes/web.php: the checkout view (resources/views/booking/checkout.blade.php)
+  calls route('booking.pay', $booking), but the route was registered as
+  ->name('booking.payment') pointing at a controller method 'payment' that
+  doesn't exist (BookingController only defines pay()). This made every
+  checkout page throw RouteNotFoundException, and even if the name had
+  matched, the payment POST would have hit a non-existent method. The route
+  is now named booking.pay and points at BookingController::pay.
+- NOT executed in this pass either, for the same reason as above (no
+  Packagist/npm registry access in this review environment): composer
+  install, php artisan migrate/db:seed/test, npm run build. Run these
+  locally and report back any failures.
