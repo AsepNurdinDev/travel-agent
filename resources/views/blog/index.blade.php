@@ -1,8 +1,8 @@
-<x-app-layout title="Travel Blog">
+<x-app-layout title="Blog Perjalanan">
     <section class="border-b border-slate-100 bg-white py-10">
         <div class="container-page">
             <p class="section-eyebrow">Stories & guides</p>
-            <h1 class="section-title !text-3xl">Travel Blog</h1>
+            <h1 class="section-title !text-3xl">Blog Perjalanan</h1>
         </div>
     </section>
 
@@ -45,7 +45,7 @@
                 <div class="card p-5">
                     <h3 class="font-bold text-ink text-sm">Search</h3>
                     <form action="{{ route('blog.index') }}" method="GET" class="mt-3">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search articles..." class="input">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari artikel..." class="input">
                     </form>
                 </div>
                 <div class="card p-5">

@@ -30,14 +30,14 @@
 
         <div class="mt-6 flex flex-col gap-2 border-t border-slate-100 pt-6">
             @auth
-                <a href="{{ route('account.dashboard') }}" class="btn-outline w-full">My Account</a>
+                <a href="{{ route('account.dashboard') }}" class="btn-outline w-full">Akun Saya</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn-ghost w-full">Log out</button>
+                    <button type="submit" class="btn-ghost w-full">Keluar</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn-outline w-full">Log in</a>
-                <a href="{{ route('register') }}" class="btn-primary w-full">Sign up</a>
+                <a href="{{ route('login') }}" class="btn-outline w-full">Masuk</a>
+                <a href="{{ route('register') }}" class="btn-primary w-full">Daftar</a>
             @endauth
         </div>
     </div>

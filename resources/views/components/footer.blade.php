@@ -1,4 +1,4 @@
-<footer class="border-t border-slate-100 bg-ink text-slate-300 pb-20 lg:pb-0">
+<footer class="border-t border-slate-100 bg-ink text-slate-300">
     <div class="container-page py-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
             <div class="flex items-center gap-2">
@@ -16,27 +16,27 @@
         </div>
 
         <div>
-            <h4 class="text-sm font-semibold uppercase tracking-wider text-white">Explore</h4>
+            <h4 class="text-sm font-semibold uppercase tracking-wider text-white">Jelajahi</h4>
             <ul class="mt-4 space-y-2.5 text-sm">
-                <li><a href="{{ route('destinations.index') }}" class="hover:text-primary-200">Destinations</a></li>
-                <li><a href="{{ route('tours.index') }}" class="hover:text-primary-200">Tour Packages</a></li>
-                <li><a href="{{ route('blog.index') }}" class="hover:text-primary-200">Travel Blog</a></li>
-                <li><a href="{{ route('gallery.index') }}" class="hover:text-primary-200">Gallery</a></li>
+                <li><a href="{{ route('destinations.index') }}" class="hover:text-primary-200">Destinasi</a></li>
+                <li><a href="{{ route('tours.index') }}" class="hover:text-primary-200">Paket Wisata</a></li>
+                <li><a href="{{ route('blog.index') }}" class="hover:text-primary-200">Blog Perjalanan</a></li>
+                <li><a href="{{ route('gallery.index') }}" class="hover:text-primary-200">Galeri</a></li>
             </ul>
         </div>
 
         <div>
             <h4 class="text-sm font-semibold uppercase tracking-wider text-white">Company</h4>
             <ul class="mt-4 space-y-2.5 text-sm">
-                <li><a href="{{ route('about') }}" class="hover:text-primary-200">About Us</a></li>
-                <li><a href="{{ route('contact.index') }}" class="hover:text-primary-200">Contact</a></li>
-                <li><a href="{{ route('login') }}" class="hover:text-primary-200">Sign In</a></li>
-                <li><a href="{{ route('register') }}" class="hover:text-primary-200">Create Account</a></li>
+                <li><a href="{{ route('about') }}" class="hover:text-primary-200">Tentang Kami</a></li>
+                <li><a href="{{ route('contact.index') }}" class="hover:text-primary-200">Kontak</a></li>
+                <li><a href="{{ route('login') }}" class="hover:text-primary-200">Masuk</a></li>
+                <li><a href="{{ route('register') }}" class="hover:text-primary-200">Buat Akun</a></li>
             </ul>
         </div>
 
         <div>
-            <h4 class="text-sm font-semibold uppercase tracking-wider text-white">Contact</h4>
+            <h4 class="text-sm font-semibold uppercase tracking-wider text-white">Kontak</h4>
             <ul class="mt-4 space-y-2.5 text-sm text-slate-400">
                 <li>{{ \App\Models\Setting::getValue('contact_address', 'Jl. Merdeka No. 1, Bandung, Indonesia') }}</li>
                 <li>{{ \App\Models\Setting::getValue('contact_phone', '+62 21 555 0123') }}</li>
@@ -47,10 +47,10 @@
 
     <div class="border-t border-white/10">
         <div class="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-            <p>&copy; {{ now()->year }} {{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}. All rights reserved.</p>
+            <p>&copy; {{ now()->year }} {{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}. Hak cipta dilindungi.</p>
             <div class="flex gap-4">
-                <span>Privacy Policy</span>
-                <span>Terms of Service</span>
+                <span>Kebijakan Privasi</span>
+                <span>Syarat & Ketentuan</span>
             </div>
         </div>
     </div>

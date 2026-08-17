@@ -12,7 +12,7 @@
         </div>
         <p class="mt-1 text-xs font-mono text-muted">{{ $booking->booking_code }}</p>
         <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted">
-            <span>Departure: <span class="text-ink font-medium">{{ optional($booking->availability)->departure_date?->format('d M Y') }}</span></span>
+            <span>Berangkat: <span class="text-ink font-medium">{{ optional($booking->availability)->departure_date?->format('d M Y') }}</span></span>
             <span>Travelers: <span class="text-ink font-medium">{{ $booking->adult_count + $booking->child_count + $booking->infant_count }}</span></span>
             <span>Total: <span class="text-ink font-medium">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span></span>
         </div>

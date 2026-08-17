@@ -1,9 +1,9 @@
-<x-app-layout title="Gallery">
+<x-app-layout title="Galeri">
 <div x-data="{ lightboxOpen: false, activeImage: null, activeCaption: '' }">
     <section class="border-b border-slate-100 bg-white py-10">
         <div class="container-page">
             <p class="section-eyebrow">Moments captured</p>
-            <h1 class="section-title !text-3xl">Gallery</h1>
+            <h1 class="section-title !text-3xl">Galeri</h1>
 
             <form action="{{ route('gallery.index') }}" method="GET" class="mt-6 flex flex-wrap gap-2">
                 <a href="{{ route('gallery.index') }}" class="btn-outline !py-1.5 !px-3 text-xs {{ ! request('destination') ? '!bg-primary !text-white !border-primary' : '' }}">All</a>

@@ -1,7 +1,7 @@
-<x-account-layout title="My Reviews">
+<x-account-layout title="My Beri Ulasans">
     @if ($reviewableBookings->isNotEmpty())
         <div class="mb-8">
-            <h2 class="font-bold text-ink mb-3">Trips Awaiting Your Review</h2>
+            <h2 class="font-bold text-ink mb-3">Perjalanan yang Menunggu Ulasan</h2>
             <div class="space-y-4" x-data="{ openBooking: null }">
                 @foreach ($reviewableBookings as $booking)
                     <div class="card p-5">
@@ -11,7 +11,7 @@
                                 <p class="font-bold text-ink">{{ $booking->tourPackage->name }}</p>
                             </div>
                             <button @click="openBooking = openBooking === {{ $booking->id }} ? null : {{ $booking->id }}" class="btn-outline !py-1.5 !px-3 text-xs shrink-0">
-                                <span x-text="openBooking === {{ $booking->id }} ? 'Cancel' : 'Write a Review'"></span>
+                                <span x-text="openBooking === {{ $booking->id }} ? 'Batal' : 'Tulis Ulasan'"></span>
                             </button>
                         </div>
 
@@ -20,7 +20,7 @@
                                 @csrf
                                 <input type="hidden" name="booking_id" value="{{ $booking->id }}">
 
-                                <label class="label">Your Rating</label>
+                                <label class="label">Penilaian Anda</label>
                                 <div class="flex gap-1 mb-4">
                                     <template x-for="i in 5" :key="i">
                                         <button type="button" @click="rating = i">
@@ -35,10 +35,10 @@
                                 <label class="label">Title <span class="text-muted font-normal">(optional)</span></label>
                                 <input type="text" name="title" maxlength="255" class="input mb-4" placeholder="Sum up your trip in a few words">
 
-                                <label class="label">Your Review</label>
-                                <textarea name="comment" rows="3" maxlength="2000" required class="input" placeholder="Tell other travelers about your experience..."></textarea>
+                                <label class="label">Ulasan Anda</label>
+                                <textarea name="comment" rows="3" maxlength="2000" required class="input" placeholder="Tell other orang about your experience..."></textarea>
 
-                                <button type="submit" class="btn-primary mt-4">Submit Review</button>
+                                <button type="submit" class="btn-primary mt-4">Kirim Ulasan</button>
                             </form>
                         </div>
                     </div>
@@ -47,12 +47,12 @@
         </div>
     @endif
 
-    <h2 class="font-bold text-ink mb-3">Your Submitted Reviews</h2>
-    @if ($myReviews->isEmpty())
+    <h2 class="font-bold text-ink mb-3">Ulasan yang Anda Kirim</h2>
+    @if ($myBeri Ulasans->isEmpty())
         <x-empty-state title="No reviews yet" description="Complete a trip to leave your first review." />
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            @foreach ($myReviews as $review)
+            @foreach ($myBeri Ulasans as $review)
                 <div class="card p-5">
                     <div class="flex items-center justify-between">
                         <p class="text-xs font-semibold uppercase text-primary">{{ $review->tourPackage->name ?? '' }}</p>

@@ -12,11 +12,11 @@
 
     <section class="container-page py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
         <div class="lg:col-span-2">
-            <h2 class="text-xl font-bold text-ink">About {{ $destination->name }}</h2>
+            <h2 class="text-xl font-bold text-ink">Tentang Kami {{ $destination->name }}</h2>
             <p class="mt-3 leading-relaxed text-muted whitespace-pre-line">{{ $destination->description }}</p>
 
             @if ($destination->galleries->isNotEmpty())
-                <h3 class="mt-10 text-lg font-bold text-ink">Gallery</h3>
+                <h3 class="mt-10 text-lg font-bold text-ink">Galeri</h3>
                 <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
                     @foreach ($destination->galleries as $image)
                         <div class="aspect-square overflow-hidden rounded-xl bg-slate-100">
@@ -33,14 +33,14 @@
             <dl class="mt-4 space-y-3 text-sm">
                 <div class="flex justify-between"><dt class="text-muted">Country</dt><dd class="font-medium text-ink">{{ $destination->country }}</dd></div>
                 <div class="flex justify-between"><dt class="text-muted">City</dt><dd class="font-medium text-ink">{{ $destination->city }}</dd></div>
-                <div class="flex justify-between"><dt class="text-muted">Tours available</dt><dd class="font-medium text-ink">{{ $tours->total() }}</dd></div>
+                <div class="flex justify-between"><dt class="text-muted">Paket Wisata available</dt><dd class="font-medium text-ink">{{ $tours->total() }}</dd></div>
             </dl>
         </div>
     </section>
 
     <section class="bg-white border-t border-slate-100 py-12">
         <div class="container-page">
-            <h2 class="section-title !text-2xl">Tours in {{ $destination->name }}</h2>
+            <h2 class="section-title !text-2xl">Paket Wisata in {{ $destination->name }}</h2>
             @if ($tours->isEmpty())
                 <div class="mt-6"><x-empty-state title="No tours yet" description="Check back soon — new tours are added regularly." /></div>
             @else

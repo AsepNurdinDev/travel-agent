@@ -28,7 +28,7 @@
                 <p class="text-xs text-muted">From</p>
                 <p class="text-lg font-bold text-ink">Rp {{ number_format($tour->price_adult, 0, ',', '.') }}</p>
             </div>
-            <span class="btn-outline !py-1.5 !px-3 text-xs">View Tour</span>
+            <span class="btn-outline !py-1.5 !px-3 text-xs">Lihat Paket Wisata</span>
         </div>
     </div>
 </a>

@@ -4,7 +4,7 @@
         $coverImage = $tourPackage->cover_image ? asset('storage/'.$tourPackage->cover_image) : 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200&q=70';
     @endphp
 
-    {{-- Gallery --}}
+    {{-- Galeri --}}
     <section class="bg-ink" x-data="{ active: 0, images: [{{ collect([$coverImage])->merge($images->map(fn($i) => $i->image ? asset('storage/'.$i->image) : $coverImage))->map(fn($u) => "'".$u."'")->implode(',') }}] }">
         <div class="container-page py-4">
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 h-[420px]">
@@ -103,7 +103,7 @@
             {{-- Add-ons preview --}}
             @if ($tourPackage->addons->isNotEmpty())
                 <div class="mt-10">
-                    <h3 class="font-bold text-ink">Available Add-ons</h3>
+                    <h3 class="font-bold text-ink">Tambahan yang Tersedia</h3>
                     <p class="text-sm text-muted">Select these during booking to customize your trip.</p>
                     <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach ($tourPackage->addons as $addon)
@@ -121,10 +121,10 @@
                 </div>
             @endif
 
-            {{-- Reviews --}}
+            {{-- Beri Ulasans --}}
             <div class="mt-10">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-xl font-bold text-ink">Reviews {{ $tourPackage->reviews_count ? "($tourPackage->reviews_count)" : '' }}</h3>
+                    <h3 class="text-xl font-bold text-ink">Beri Ulasans {{ $tourPackage->reviews_count ? "($tourPackage->reviews_count)" : '' }}</h3>
                     @if ($tourPackage->reviews_avg_rating)
                         <x-rating :value="$tourPackage->reviews_avg_rating" size="lg" />
                     @endif
@@ -140,7 +140,7 @@
         </div>
 
         {{-- Booking sidebar --}}
-        <div class="lg:col-span-1" id="departures">
+        <div class="lg:col-span-1">
             <div class="card sticky top-24 p-6">
                 <p class="text-xs text-muted">Starting from</p>
                 <p class="text-2xl font-bold text-ink">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }} <span class="text-sm font-normal text-muted">/ adult</span></p>
@@ -150,7 +150,7 @@
                     <p>Infant: Rp {{ number_format($tourPackage->price_infant, 0, ',', '.') }}</p>
                 </div>
 
-                <h4 class="mt-5 text-sm font-semibold text-ink">Choose a departure date</h4>
+                <h4 class="mt-5 text-sm font-semibold text-ink">Pilih tanggal keberangkatan</h4>
                 <div class="mt-3 space-y-2 max-h-72 overflow-y-auto pr-1">
                     @forelse ($tourPackage->availabilities as $availability)
                         <div class="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2.5 text-sm">
@@ -161,7 +161,7 @@
                             @auth
                                 <a href="{{ route('booking.create', $availability) }}" class="btn-primary !py-1.5 !px-3 text-xs">Book</a>
                             @else
-                                <a href="{{ route('login') }}" class="btn-outline !py-1.5 !px-3 text-xs">Log in to book</a>
+                                <a href="{{ route('login') }}" class="btn-outline !py-1.5 !px-3 text-xs">Masuk to book</a>
                             @endauth
                         </div>
                     @empty
@@ -174,31 +174,16 @@
         </div>
     </section>
 
-    @if ($relatedTours->isNotEmpty())
+    @if ($relatedPaketWisata->isNotEmpty())
     <section class="bg-white border-t border-slate-100 py-12">
         <div class="container-page">
             <h2 class="section-title !text-2xl">More tours in {{ $tourPackage->destination->name }}</h2>
             <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach ($relatedTours as $tour)
+                @foreach ($relatedPaketWisata as $tour)
                     <x-tour-card :tour="$tour" />
                 @endforeach
             </div>
         </div>
     </section>
     @endif
-
-    {{-- Extra clearance on mobile so the sticky CTA + bottom nav never cover content --}}
-    <div class="h-28 lg:hidden" aria-hidden="true"></div>
-
-    {{-- Sticky mobile booking CTA — sits just above the bottom tab bar --}}
-    <div class="fixed inset-x-0 z-20 border-t border-slate-100 bg-white/95 px-4 py-3 backdrop-blur lg:hidden"
-         style="bottom: calc(4rem + env(safe-area-inset-bottom));">
-        <div class="flex items-center justify-between gap-3">
-            <div class="min-w-0">
-                <p class="text-[11px] text-muted">From</p>
-                <p class="truncate text-base font-bold text-ink">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }} <span class="text-xs font-normal text-muted">/ adult</span></p>
-            </div>
-            <a href="#departures" class="btn-primary shrink-0">Book this trip</a>
-        </div>
-    </div>
 </x-app-layout>

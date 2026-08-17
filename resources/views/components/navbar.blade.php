@@ -1,19 +1,19 @@
 @php
     $navLinks = [
-        'home' => ['label' => 'Home', 'route' => 'home'],
-        'destinations' => ['label' => 'Destinations', 'route' => 'destinations.index'],
-        'tours' => ['label' => 'Tours', 'route' => 'tours.index'],
+        'home' => ['label' => 'Beranda', 'route' => 'home'],
+        'destinations' => ['label' => 'Destinasi', 'route' => 'destinations.index'],
+        'tours' => ['label' => 'Paket Wisata', 'route' => 'tours.index'],
         'blog' => ['label' => 'Blog', 'route' => 'blog.index'],
-        'gallery' => ['label' => 'Gallery', 'route' => 'gallery.index'],
-        'about' => ['label' => 'About', 'route' => 'about'],
-        'contact' => ['label' => 'Contact', 'route' => 'contact.index'],
+        'gallery' => ['label' => 'Galeri', 'route' => 'gallery.index'],
+        'about' => ['label' => 'Tentang Kami', 'route' => 'about'],
+        'contact' => ['label' => 'Kontak', 'route' => 'contact.index'],
     ];
 @endphp
 <header x-data="{ scrolled: false, mobileOpen: false }"
         x-init="scrolled = window.scrollY > 8; window.addEventListener('scroll', () => scrolled = window.scrollY > 8)"
         :class="scrolled ? 'bg-white/95 shadow-sm backdrop-blur' : 'bg-white/70 backdrop-blur'"
         class="sticky top-0 z-40 border-b border-slate-100 transition-colors">
-    <nav class="container-page flex h-16 items-center justify-between" aria-label="Main navigation">
+    <nav class="container-page flex h-16 items-center justify-between" aria-label="Navigasi utama">
         <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
             <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-bold">N</span>
             <span class="text-lg font-bold text-ink">{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</span>
@@ -40,19 +40,19 @@
                     </button>
                     <div x-show="open" x-transition x-cloak
                          class="absolute right-0 mt-2 w-52 rounded-xl border border-slate-100 bg-white py-2 shadow-card">
-                        <a href="{{ route('account.dashboard') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">My Account</a>
-                        <a href="{{ route('account.bookings') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">My Bookings</a>
-                        <a href="{{ route('account.profile') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Profile</a>
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Account Settings</a>
+                        <a href="{{ route('account.dashboard') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Akun Saya</a>
+                        <a href="{{ route('account.bookings') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Pesanan Saya</a>
+                        <a href="{{ route('account.profile') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Profil</a>
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-ink hover:bg-primary-50 hover:text-primary">Pengaturan Akun</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Log out</button>
+                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Keluar</button>
                         </form>
                     </div>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-                <a href="{{ route('register') }}" class="btn-primary">Sign up</a>
+                <a href="{{ route('login') }}" class="btn-ghost">Masuk</a>
+                <a href="{{ route('register') }}" class="btn-primary">Daftar</a>
             @endauth
         </div>
 

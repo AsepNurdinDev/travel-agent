@@ -1,4 +1,4 @@
-<x-app-layout title="Profile">
+<x-app-layout title="Profil">
     <div class="card p-6 max-w-2xl">
         <h2 class="font-bold text-ink">Personal Information</h2>
         <p class="text-sm text-muted mt-1">This information is used for your bookings and travel documents.</p>
@@ -8,7 +8,7 @@
             @method('PATCH')
 
             <div>
-                <label class="label">Full Name</label>
+                <label class="label">Full Nama</label>
                 <input type="text" name="name" value="{{ old('name', $customer->name ?? auth()->user()->name) }}" required maxlength="255" class="input">
                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
             </div>
@@ -16,7 +16,7 @@
             <div>
                 <label class="label">Email</label>
                 <input type="email" value="{{ auth()->user()->email }}" disabled class="input bg-slate-50 text-muted">
-                <p class="mt-1 text-xs text-muted">To change your email, go to <a href="{{ route('profile.edit') }}" class="text-primary hover:underline">Account Settings</a>.</p>
+                <p class="mt-1 text-xs text-muted">To change your email, go to <a href="{{ route('profile.edit') }}" class="text-primary hover:underline">Pengaturan Akun</a>.</p>
             </div>
 
             <div>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="pt-2">
-                <button type="submit" class="btn-primary">Save Changes</button>
+                <button type="submit" class="btn-primary">Simpan Changes</button>
                 @if (session('success'))
                     <span class="ml-3 text-sm text-emerald-600">{{ session('success') }}</span>
                 @endif

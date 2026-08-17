@@ -1,4 +1,4 @@
-<x-app-layout title="Book Your Trip">
+<x-app-layout title="Pesan Perjalanan">
 @php
     $addonsJson = $tourPackage->addons->map(fn($a) => [
         'id' => $a->id, 'name' => $a->name, 'price' => (float) $a->price, 'description' => $a->description,
@@ -37,7 +37,7 @@
 
                 {{-- Step 1: Trip --}}
                 <div x-show="step === 1" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Trip Details</h2>
+                    <h2 class="text-lg font-bold text-ink">Detail Perjalanan</h2>
                     <div class="mt-4 flex gap-4">
                         <img src="{{ $tourPackage->cover_image ? asset('storage/'.$tourPackage->cover_image) : 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=300&q=60' }}"
                              class="h-24 w-32 shrink-0 rounded-lg object-cover" alt="">
@@ -45,22 +45,22 @@
                             <p class="text-xs font-semibold uppercase text-primary">{{ $tourPackage->destination->name }}</p>
                             <h3 class="font-bold text-ink">{{ $tourPackage->name }}</h3>
                             <p class="mt-1 text-sm text-muted">{{ $tourPackage->duration_days }} Days / {{ $tourPackage->duration_nights }} Nights</p>
-                            <p class="mt-1 text-sm text-muted">Departure: <span class="font-medium text-ink">{{ $availability->departure_date->format('d M Y') }}</span> — Return: <span class="font-medium text-ink">{{ $availability->return_date->format('d M Y') }}</span></p>
-                            <p class="mt-1 text-xs text-emerald-600 font-medium" x-text="remainingQuota + ' seats remaining'"></p>
+                            <p class="mt-1 text-sm text-muted">Berangkat: <span class="font-medium text-ink">{{ $availability->departure_date->format('d M Y') }}</span> — Pulang: <span class="font-medium text-ink">{{ $availability->return_date->format('d M Y') }}</span></p>
+                            <p class="mt-1 text-xs text-emerald-600 font-medium" x-text="remainingQuota + ' kursi tersisa'"></p>
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end">
-                        <button type="button" @click="goNext()" class="btn-primary">Continue</button>
+                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
                     </div>
                 </div>
 
-                {{-- Step 2: Participants --}}
+                {{-- Step 2: Peserta --}}
                 <div x-show="step === 2" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Participants</h2>
+                    <h2 class="text-lg font-bold text-ink">Peserta</h2>
                     <p class="text-sm text-muted">Tell us who's coming along.</p>
 
                     <div class="mt-5 divide-y divide-slate-100">
-                        @foreach ([['key'=>'adult','label'=>'Adults','desc'=>'Age 12+'],['key'=>'child','label'=>'Children','desc'=>'Age 2–11'],['key'=>'infant','label'=>'Infants','desc'=>'Under 2']] as $p)
+                        @foreach ([['key'=>'adult','label'=>'Dewasa','desc'=>'Usia 12 tahun ke atas'],['key'=>'child','label'=>'Anak-anak','desc'=>'Usia 2–11 tahun'],['key'=>'infant','label'=>'Bayi','desc'=>'Di bawah 2 tahun']] as $p)
                         <div class="flex items-center justify-between py-4">
                             <div>
                                 <p class="font-medium text-ink">{{ $p['label'] }}</p>
@@ -77,22 +77,22 @@
                     <input type="hidden" name="adult_count" :value="counts.adult">
                     <input type="hidden" name="child_count" :value="counts.child">
                     <input type="hidden" name="infant_count" :value="counts.infant">
-                    <p x-show="totalParticipants() > remainingQuota" x-cloak class="mt-2 text-sm text-red-600">Only <span x-text="remainingQuota"></span> seats remain for this departure.</p>
+                    <p x-show="totalPeserta() > remainingQuota" x-cloak class="mt-2 text-sm text-red-600">Only <span x-text="remainingQuota"></span> seats remain for this departure.</p>
 
                     <div class="mt-6 flex justify-between">
                         <button type="button" @click="step = 1" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" :disabled="totalParticipants() < 1 || totalParticipants() > remainingQuota" class="btn-primary">Continue</button>
+                        <button type="button" @click="goNext()" :disabled="totalPeserta() < 1 || totalPeserta() > remainingQuota" class="btn-primary">Lanjutkan</button>
                     </div>
                 </div>
 
                 {{-- Step 3: Customer --}}
                 <div x-show="step === 3" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Your Information</h2>
+                    <h2 class="text-lg font-bold text-ink">Data Diri Anda</h2>
                     <p class="text-sm text-muted">We'll use this to confirm your booking and send updates.</p>
 
                     <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="label">Full Name</label>
+                            <label class="label">Full Nama</label>
                             <input type="text" name="name" required maxlength="255" value="{{ old('name', $customer->name ?? auth()->user()->name) }}" class="input">
                         </div>
                         <div>
@@ -123,7 +123,7 @@
 
                     <div class="mt-6 flex justify-between">
                         <button type="button" @click="step = 2" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" class="btn-primary">Continue</button>
+                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
                     </div>
                 </div>
 
@@ -171,13 +171,13 @@
 
                     <div class="mt-6 flex justify-between">
                         <button type="button" @click="step = 3" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" class="btn-primary">Continue</button>
+                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
                     </div>
                 </div>
 
-                {{-- Step 5: Review --}}
+                {{-- Step 5: Beri Ulasan --}}
                 <div x-show="step === 5" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Review &amp; Promo</h2>
+                    <h2 class="text-lg font-bold text-ink">Periksa &amp; Promo</h2>
 
                     <div class="mt-4">
                         <label class="label">Promo Code <span class="text-muted font-normal">(optional)</span></label>
@@ -189,13 +189,13 @@
 
                     <div class="mt-6 flex items-start gap-2">
                         <input type="checkbox" name="terms" required id="terms" class="mt-0.5 h-4 w-4 rounded text-primary focus:ring-primary">
-                        <label for="terms" class="text-sm text-muted">I agree to the <span class="text-primary font-medium">Terms &amp; Conditions</span> and <span class="text-primary font-medium">Cancellation Policy</span>.</label>
+                        <label for="terms" class="text-sm text-muted">I agree to the <span class="text-primary font-medium">Terms &amp; Conditions</span> and <span class="text-primary font-medium">Batallation Policy</span>.</label>
                     </div>
 
                     <div class="mt-6 flex justify-between">
                         <button type="button" @click="step = 4" class="btn-outline">Back</button>
                         <button type="submit" :disabled="submitting" class="btn-accent">
-                            <span x-show="!submitting">Confirm Booking</span>
+                            <span x-show="!submitting">Konfirmasi Pesanan</span>
                             <span x-show="submitting" x-cloak>Processing…</span>
                         </button>
                     </div>
@@ -205,11 +205,11 @@
             {{-- Live summary sidebar --}}
             <div class="lg:col-span-1">
                 <div class="card sticky top-24 p-6">
-                    <h3 class="font-bold text-ink">Price Summary</h3>
+                    <h3 class="font-bold text-ink">Ringkasan Harga</h3>
                     <div class="mt-4 space-y-2 text-sm">
-                        <div class="flex justify-between"><span class="text-muted">Adults × <span x-text="counts.adult"></span></span><span x-text="formatRp(estimate?.price_adult * counts.adult || 0)"></span></div>
-                        <div class="flex justify-between" x-show="counts.child > 0"><span class="text-muted">Children × <span x-text="counts.child"></span></span><span x-text="formatRp(estimate?.price_child * counts.child || 0)"></span></div>
-                        <div class="flex justify-between" x-show="counts.infant > 0"><span class="text-muted">Infants × <span x-text="counts.infant"></span></span><span x-text="formatRp(estimate?.price_infant * counts.infant || 0)"></span></div>
+                        <div class="flex justify-between"><span class="text-muted">Dewasa × <span x-text="counts.adult"></span></span><span x-text="formatRp(estimate?.price_adult * counts.adult || 0)"></span></div>
+                        <div class="flex justify-between" x-show="counts.child > 0"><span class="text-muted">Anak-anak × <span x-text="counts.child"></span></span><span x-text="formatRp(estimate?.price_child * counts.child || 0)"></span></div>
+                        <div class="flex justify-between" x-show="counts.infant > 0"><span class="text-muted">Bayi × <span x-text="counts.infant"></span></span><span x-text="formatRp(estimate?.price_infant * counts.infant || 0)"></span></div>
                         <div class="flex justify-between" x-show="estimate && parseFloat(estimate.addons_total) > 0"><span class="text-muted">Add-ons</span><span x-text="formatRp(estimate?.addons_total || 0)"></span></div>
                         <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-muted">Subtotal</span><span x-text="formatRp(estimate?.subtotal || 0)"></span></div>
                         <div class="flex justify-between text-emerald-600" x-show="estimate && parseFloat(estimate.discount_amount) > 0"><span>Discount</span><span x-text="'- ' + formatRp(estimate?.discount_amount || 0)"></span></div>
@@ -230,7 +230,7 @@ function bookingForm(config) {
     return {
         step: 1,
         completedSteps: [],
-        steps: ['Trip', 'Participants', 'Customer', 'Add-ons', 'Review'],
+        steps: ['Perjalanan', 'Peserta', 'Data Diri', 'Tambahan', 'Beri Ulasan'],
         availabilityId: config.availabilityId,
         remainingQuota: config.remainingQuota,
         addons: config.addons,
@@ -241,7 +241,7 @@ function bookingForm(config) {
         estimate: null,
         submitting: false,
 
-        totalParticipants() {
+        totalPeserta() {
             return this.counts.adult + this.counts.child + this.counts.infant;
         },
         inc(key) { this.counts[key]++; this.refreshEstimate(); },

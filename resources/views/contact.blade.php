@@ -1,8 +1,8 @@
-<x-app-layout title="Contact Us">
+<x-app-layout title="Kontak Us">
     <section class="border-b border-slate-100 bg-white py-10">
         <div class="container-page">
             <p class="section-eyebrow">We'd love to hear from you</p>
-            <h1 class="section-title !text-3xl">Contact Us</h1>
+            <h1 class="section-title !text-3xl">Kontak Us</h1>
         </div>
     </section>
 
@@ -30,7 +30,7 @@
                 <form method="POST" action="{{ route('contact.store') }}" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     @csrf
                     <div>
-                        <label class="label">Name</label>
+                        <label class="label">Nama</label>
                         <input type="text" name="name" value="{{ old('name') }}" required maxlength="255" class="input">
                         <x-input-error :messages="$errors->get('name')" class="mt-1" />
                     </div>

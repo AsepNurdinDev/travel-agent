@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,8 +20,8 @@
             </a>
 
             <div class="relative z-10 max-w-md">
-                <p class="text-sm font-semibold uppercase tracking-wider text-primary-100">Trusted by 12,000+ travelers</p>
-                <h2 class="mt-3 text-3xl font-bold leading-snug">Your next journey across Indonesia starts here.</h2>
+                <p class="text-sm font-semibold uppercase tracking-wider text-primary-100">Trusted by 12,000+ orang</p>
+                <h2 class="mt-3 text-3xl font-bold leading-snug">Perjalanan Anda berikutnya di Indonesia dimulai dari sini.</h2>
                 <p class="mt-4 text-primary-100">Curated destinations, transparent pricing, and a support team that's with you from booking to landing.</p>
             </div>
 

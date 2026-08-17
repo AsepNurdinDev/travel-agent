@@ -62,7 +62,7 @@ class TourPackageController extends Controller
 
         $tourPackage->loadCount('reviews')->loadAvg('reviews', 'rating');
 
-        $relatedTours = TourPackage::query()
+        $relatedPaketWisata = TourPackage::query()
             ->active()
             ->where('destination_id', $tourPackage->destination_id)
             ->whereKeyNot($tourPackage->id)
@@ -70,6 +70,6 @@ class TourPackageController extends Controller
             ->take(4)
             ->get();
 
-        return view('tours.show', compact('tourPackage', 'relatedTours'));
+        return view('tours.show', compact('tourPackage', 'relatedPaketWisata'));
     }
 }

@@ -1,10 +1,10 @@
-<x-app-layout title="About Us">
+<x-app-layout title="Tentang Kami">
     <section class="relative overflow-hidden bg-ink py-24">
         <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=1600&q=70" class="absolute inset-0 h-full w-full object-cover opacity-40" alt="">
         <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/30"></div>
         <div class="container-page relative z-10 text-center">
             <p class="section-eyebrow text-primary-200">Our Story</p>
-            <h1 class="mt-2 text-4xl font-bold text-white">Built by travelers, for travelers</h1>
+            <h1 class="mt-2 text-4xl font-bold text-white">Built by orang, for orang</h1>
             <p class="mt-3 max-w-xl mx-auto text-slate-200">{{ \App\Models\Setting::getValue('site_tagline', 'A team of local guides and planners bringing you honest, well-run trips across Indonesia.') }}</p>
         </div>
     </section>
@@ -43,9 +43,9 @@
     <section class="container-page py-16">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             @foreach ([
-                ['value' => $stats['destinations'], 'label' => 'Destinations'],
-                ['value' => $stats['tours'], 'label' => 'Tour Packages'],
-                ['value' => $stats['travelers'], 'label' => 'Happy Travelers'],
+                ['value' => $stats['destinations'], 'label' => 'Destinasi'],
+                ['value' => $stats['tours'], 'label' => 'Paket Wisata'],
+                ['value' => $stats['orang'], 'label' => 'Happy Travelers'],
                 ['value' => $stats['avg_rating'] ?: '5.0', 'label' => 'Average Rating'],
             ] as $s)
                 <div>
@@ -61,8 +61,8 @@
             <h2 class="text-3xl font-bold text-white">Let's plan your next trip</h2>
             <p class="mt-3 text-primary-100">Browse our tours or reach out — our team is happy to help you find the right fit.</p>
             <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a href="{{ route('tours.index') }}" class="btn-accent">Browse Tours</a>
-                <a href="{{ route('contact.index') }}" class="btn bg-white text-primary hover:bg-primary-50">Contact Us</a>
+                <a href="{{ route('tours.index') }}" class="btn-accent">Browse Paket Wisata</a>
+                <a href="{{ route('contact.index') }}" class="btn bg-white text-primary hover:bg-primary-50">Kontak Us</a>
             </div>
         </div>
     </section>
