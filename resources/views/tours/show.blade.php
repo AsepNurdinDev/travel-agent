@@ -140,7 +140,7 @@
         </div>
 
         {{-- Booking sidebar --}}
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-1" id="departures">
             <div class="card sticky top-24 p-6">
                 <p class="text-xs text-muted">Starting from</p>
                 <p class="text-2xl font-bold text-ink">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }} <span class="text-sm font-normal text-muted">/ adult</span></p>
@@ -186,4 +186,19 @@
         </div>
     </section>
     @endif
+
+    {{-- Extra clearance on mobile so the sticky CTA + bottom nav never cover content --}}
+    <div class="h-28 lg:hidden" aria-hidden="true"></div>
+
+    {{-- Sticky mobile booking CTA — sits just above the bottom tab bar --}}
+    <div class="fixed inset-x-0 z-20 border-t border-slate-100 bg-white/95 px-4 py-3 backdrop-blur lg:hidden"
+         style="bottom: calc(4rem + env(safe-area-inset-bottom));">
+        <div class="flex items-center justify-between gap-3">
+            <div class="min-w-0">
+                <p class="text-[11px] text-muted">From</p>
+                <p class="truncate text-base font-bold text-ink">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }} <span class="text-xs font-normal text-muted">/ adult</span></p>
+            </div>
+            <a href="#departures" class="btn-primary shrink-0">Book this trip</a>
+        </div>
+    </div>
 </x-app-layout>

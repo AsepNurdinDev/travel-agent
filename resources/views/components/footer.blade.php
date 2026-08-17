@@ -1,4 +1,4 @@
-<footer class="border-t border-slate-100 bg-ink text-slate-300">
+<footer class="border-t border-slate-100 bg-ink text-slate-300 pb-20 lg:pb-0">
     <div class="container-page py-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
             <div class="flex items-center gap-2">

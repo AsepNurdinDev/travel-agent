@@ -18,7 +18,7 @@
 <body class="flex min-h-screen flex-col bg-surface font-sans text-ink">
     <x-navbar />
 
-    <main class="flex-1">
+    <main class="flex-1 pb-20 lg:pb-0">
         @if (session('success'))
             <div class="container-page mt-4">
                 <div class="rounded-lg bg-primary-50 border border-primary-100 text-primary-800 px-4 py-3 text-sm font-medium" role="status">
@@ -38,5 +38,7 @@
     </main>
 
     <x-footer />
+
+    <x-mobile-bottom-nav />
 </body>
 </html>

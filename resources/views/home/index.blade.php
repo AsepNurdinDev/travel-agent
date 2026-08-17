@@ -26,6 +26,18 @@
                     Search Tours
                 </button>
             </form>
+
+            @if ($featuredDestinations->isNotEmpty())
+                <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
+                    <span class="text-slate-300">Popular:</span>
+                    @foreach ($featuredDestinations->take(5) as $destination)
+                        <a href="{{ route('destinations.show', $destination->slug) }}"
+                           class="rounded-full border border-white/20 px-3 py-1 text-white/90 transition hover:border-white/50 hover:bg-white/10">
+                            {{ $destination->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
 
