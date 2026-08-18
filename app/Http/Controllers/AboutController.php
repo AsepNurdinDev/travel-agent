@@ -18,7 +18,7 @@ class AboutController extends Controller
             'destinations'    => Destination::count(),
             'tours'           => TourPackage::count(),
             'rating'          => 4.8,
-            'avg_rating'      => 4.8, // Key 'avg_rating' yang dipanggil di Blade
+            'avg_rating'      => 4.8, 
         ];
 
         return view('about', compact('stats'));

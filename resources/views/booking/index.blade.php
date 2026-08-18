@@ -4,6 +4,7 @@
         'id' => $a->id, 'name' => $a->name, 'price' => (float) $a->price, 'description' => $a->description,
     ])->values();
 @endphp
+
 <div
     x-data="bookingForm({
         availabilityId: {{ $availability->id }},
@@ -13,148 +14,194 @@
         csrf: '{{ csrf_token() }}',
     })"
     x-init="refreshEstimate()"
-    class="container-page py-10"
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
 >
-    {{-- Stepper --}}
-    <div class="mb-8 flex items-center justify-between overflow-x-auto pb-2">
-        <template x-for="(label, i) in steps" :key="i">
-            <div class="flex items-center shrink-0">
-                <div class="flex items-center gap-2 cursor-pointer" @click="if (i + 1 < step || completedSteps.includes(i+1)) step = i + 1">
-                    <span class="flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition"
-                          :class="step === i + 1 ? 'bg-primary text-white' : (step > i + 1 ? 'bg-primary-100 text-primary' : 'bg-slate-100 text-muted')"
-                          x-text="i + 1"></span>
-                    <span class="hidden sm:inline text-sm font-medium" :class="step === i + 1 ? 'text-ink' : 'text-muted'" x-text="label"></span>
+    {{-- Stepper Progress --}}
+    <div class="mb-10 overflow-x-auto pb-4 pt-1">
+        <div class="flex items-center justify-between min-w-[600px] max-w-4xl mx-auto">
+            <template x-for="(label, i) in steps" :key="i">
+                <div class="flex items-center flex-1 last:flex-none">
+                    <div class="flex items-center gap-3 cursor-pointer group" @click="if (i + 1 < step || completedSteps.includes(i+1)) step = i + 1">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-200 shadow-sm"
+                              :class="step === i + 1 
+                                ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' 
+                                : (step > i + 1 || completedSteps.includes(i+1) ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200')"
+                              x-text="i + 1"></span>
+                        <span class="text-sm font-semibold transition-colors duration-200" 
+                              :class="step === i + 1 ? 'text-slate-900 font-bold' : 'text-slate-500'" 
+                              x-text="label"></span>
+                    </div>
+                    <div class="mx-4 h-0.5 flex-1 bg-slate-200 rounded" x-show="i < steps.length - 1"
+                         :class="step > i + 1 ? 'bg-emerald-500' : 'bg-slate-200'"></div>
                 </div>
-                <div class="mx-3 h-px w-8 bg-slate-200 hidden sm:block" x-show="i < steps.length - 1"></div>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
 
     <form @submit.prevent="submit" method="POST" :action="'{{ route('booking.store', $availability) }}'">
         @csrf
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
+            {{-- Main Form Content Area --}}
             <div class="lg:col-span-2 space-y-6">
 
-                {{-- Step 1: Trip --}}
-                <div x-show="step === 1" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Detail Perjalanan</h2>
-                    <div class="mt-4 flex gap-4">
-                        <img src="{{ $tourPackage->cover_image ? asset('storage/'.$tourPackage->cover_image) : 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=300&q=60' }}"
-                             class="h-24 w-32 shrink-0 rounded-lg object-cover" alt="">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-primary">{{ $tourPackage->destination->name }}</p>
-                            <h3 class="font-bold text-ink">{{ $tourPackage->name }}</h3>
-                            <p class="mt-1 text-sm text-muted">{{ $tourPackage->duration_days }} Days / {{ $tourPackage->duration_nights }} Nights</p>
-                            <p class="mt-1 text-sm text-muted">Berangkat: <span class="font-medium text-ink">{{ $availability->departure_date->format('d M Y') }}</span> — Pulang: <span class="font-medium text-ink">{{ $availability->return_date->format('d M Y') }}</span></p>
-                            <p class="mt-1 text-xs text-emerald-600 font-medium" x-text="remainingQuota + ' kursi tersisa'"></p>
+                {{-- Step 1: Trip Summary --}}
+                <div x-show="step === 1" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-slate-100 pb-4 mb-6">
+                        <h2 class="text-xl font-bold text-slate-900">Detail Perjalanan</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Konfirmasi tanggal dan durasi tur pilihan Anda.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-5 p-4 rounded-2xl bg-slate-50/80 border border-slate-100">
+                        <img src="{{ $tourPackage->cover_image ? asset('storage/'.$tourPackage->cover_image) : 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=400&q=80' }}"
+                             class="h-28 w-full sm:w-36 shrink-0 rounded-xl object-cover shadow-sm" alt="{{ $tourPackage->name }}">
+                        <div class="flex flex-col justify-between">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">{{ $tourPackage->destination->name }}</span>
+                                <h3 class="text-base font-bold text-slate-900 mt-0.5">{{ $tourPackage->name }}</h3>
+                                <p class="text-xs font-medium text-slate-500 mt-1">{{ $tourPackage->duration_days }} Hari / {{ $tourPackage->duration_nights }} Malam</p>
+                            </div>
+                            
+                            <div class="mt-3 pt-3 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-2 text-xs">
+                                <div class="text-slate-600">
+                                    <span class="font-bold text-slate-900">{{ $availability->departure_date->format('d M Y') }}</span> 
+                                    <span class="text-slate-400 mx-1">—</span> 
+                                    <span class="font-bold text-slate-900">{{ $availability->return_date->format('d M Y') }}</span>
+                                </div>
+                                <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 border border-emerald-200/50">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    <span x-text="remainingQuota + ' sisa kuota'"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-end">
-                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
+
+                    <div class="mt-8 flex justify-end">
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">
+                            Lanjutkan
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </button>
                     </div>
                 </div>
 
                 {{-- Step 2: Peserta --}}
-                <div x-show="step === 2" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Peserta</h2>
-                    <p class="text-sm text-muted">Tell us who's coming along.</p>
+                <div x-show="step === 2" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-slate-100 pb-4 mb-6">
+                        <h2 class="text-xl font-bold text-slate-900">Jumlah Peserta</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Tentukan jumlah orang yang akan ikut dalam perjalanan ini.</p>
+                    </div>
 
-                    <div class="mt-5 divide-y divide-slate-100">
-                        @foreach ([['key'=>'adult','label'=>'Dewasa','desc'=>'Usia 12 tahun ke atas'],['key'=>'child','label'=>'Anak-anak','desc'=>'Usia 2–11 tahun'],['key'=>'infant','label'=>'Bayi','desc'=>'Di bawah 2 tahun']] as $p)
-                        <div class="flex items-center justify-between py-4">
+                    <div class="divide-y divide-slate-100">
+                        @foreach ([
+                            ['key'=>'adult','label'=>'Dewasa','desc'=>'Usia 12 tahun ke atas'],
+                            ['key'=>'child','label'=>'Anak-anak','desc'=>'Usia 2–11 tahun'],
+                            ['key'=>'infant','label'=>'Bayi','desc'=>'Di bawah 2 tahun']
+                        ] as $p)
+                        <div class="flex items-center justify-between py-4 first:pt-0 last:pb-0">
                             <div>
-                                <p class="font-medium text-ink">{{ $p['label'] }}</p>
-                                <p class="text-xs text-muted">{{ $p['desc'] }}</p>
+                                <p class="text-sm font-bold text-slate-900">{{ $p['label'] }}</p>
+                                <p class="text-xs text-slate-400 mt-0.5">{{ $p['desc'] }}</p>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <button type="button" @click="dec('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 text-ink hover:border-primary hover:text-primary">−</button>
-                                <span class="w-6 text-center font-semibold" x-text="counts.{{ $p['key'] }}"></span>
-                                <button type="button" @click="inc('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 text-ink hover:border-primary hover:text-primary">+</button>
+                            <div class="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border border-slate-200/60">
+                                <button type="button" @click="dec('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm border border-slate-200 hover:bg-slate-100 transition disabled:opacity-40" :disabled="counts.{{ $p['key'] }} <= ({{ $p['key'] === 'adult' ? 1 : 0 }})">−</button>
+                                <span class="w-7 text-center font-bold text-sm text-slate-900" x-text="counts.{{ $p['key'] }}"></span>
+                                <button type="button" @click="inc('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm border border-slate-200 hover:bg-slate-100 transition">+</button>
                             </div>
                         </div>
                         @endforeach
                     </div>
+
                     <input type="hidden" name="adult_count" :value="counts.adult">
                     <input type="hidden" name="child_count" :value="counts.child">
                     <input type="hidden" name="infant_count" :value="counts.infant">
-                    <p x-show="totalPeserta() > remainingQuota" x-cloak class="mt-2 text-sm text-red-600">Only <span x-text="remainingQuota"></span> seats remain for this departure.</p>
+                    
+                    <p x-show="totalPeserta() > remainingQuota" x-cloak class="mt-4 rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-600 border border-red-100 flex items-center gap-2">
+                        <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        Tersisa <span x-text="remainingQuota"></span> kursi untuk tanggal keberangkatan ini.
+                    </p>
 
-                    <div class="mt-6 flex justify-between">
-                        <button type="button" @click="step = 1" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" :disabled="totalPeserta() < 1 || totalPeserta() > remainingQuota" class="btn-primary">Lanjutkan</button>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button type="button" @click="step = 1" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
+                        <button type="button" @click="goNext()" :disabled="totalPeserta() < 1 || totalPeserta() > remainingQuota" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition disabled:opacity-50">Lanjutkan</button>
                     </div>
                 </div>
 
-                {{-- Step 3: Customer --}}
-                <div x-show="step === 3" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Data Diri Anda</h2>
-                    <p class="text-sm text-muted">We'll use this to confirm your booking and send updates.</p>
+                {{-- Step 3: Customer Information --}}
+                <div x-show="step === 3" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-slate-100 pb-4 mb-6">
+                        <h2 class="text-xl font-bold text-slate-900">Data Diri Pemesan</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Informasi ini digunakan untuk konfirmasi pesanan dan e-tiket.</p>
+                    </div>
 
-                    <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div class="sm:col-span-2">
-                            <label class="label">Full Nama</label>
-                            <input type="text" name="name" required maxlength="255" value="{{ old('name', $customer->name ?? auth()->user()->name) }}" class="input">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nama Lengkap</label>
+                            <input type="text" name="name" required maxlength="255" value="{{ old('name', $customer->name ?? auth()->user()->name) }}" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">
                         </div>
                         <div>
-                            <label class="label">Email</label>
-                            <input type="email" value="{{ auth()->user()->email }}" disabled class="input bg-slate-50 text-muted">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email</label>
+                            <input type="email" value="{{ auth()->user()->email }}" disabled class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed">
                         </div>
                         <div>
-                            <label class="label">Phone</label>
-                            <input type="text" name="phone" required maxlength="20" value="{{ old('phone', $customer->phone ?? '') }}" class="input">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="label">Address <span class="text-muted font-normal">(optional)</span></label>
-                            <input type="text" name="address" maxlength="500" value="{{ old('address', $customer->address ?? '') }}" class="input">
-                        </div>
-                        <div>
-                            <label class="label">ID / Passport Number <span class="text-muted font-normal">(optional)</span></label>
-                            <input type="text" name="identity_number" maxlength="50" value="{{ old('identity_number', $customer->identity_number ?? '') }}" class="input">
-                        </div>
-                        <div>
-                            <label class="label">Date of Birth <span class="text-muted font-normal">(optional)</span></label>
-                            <input type="date" name="date_of_birth" value="{{ old('date_of_birth', optional($customer->date_of_birth ?? null)->format('Y-m-d')) }}" class="input">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Telepon / WA</label>
+                            <input type="text" name="phone" required maxlength="20" value="{{ old('phone', $customer->phone ?? '') }}" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">
                         </div>
                         <div class="sm:col-span-2">
-                            <label class="label">Notes for our team <span class="text-muted font-normal">(optional)</span></label>
-                            <textarea name="notes" rows="2" maxlength="1000" class="input">{{ old('notes') }}</textarea>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Alamat <span class="text-slate-400 font-normal">(Opsional)</span></label>
+                            <input type="text" name="address" maxlength="500" value="{{ old('address', $customer->address ?? '') }}" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor KTP / Paspor <span class="text-slate-400 font-normal">(Opsional)</span></label>
+                            <input type="text" name="identity_number" maxlength="50" value="{{ old('identity_number', $customer->identity_number ?? '') }}" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tanggal Lahir <span class="text-slate-400 font-normal">(Opsional)</span></label>
+                            <input type="date" name="date_of_birth" value="{{ old('date_of_birth', optional($customer->date_of_birth ?? null)->format('Y-m-d')) }}" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Catatan Khusus <span class="text-slate-400 font-normal">(Opsional)</span></label>
+                            <textarea name="notes" rows="2" maxlength="1000" placeholder="Permintaan khusus seperti makanan, kasur tambahan, dll." class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:ring-emerald-500">{{ old('notes') }}</textarea>
                         </div>
                     </div>
 
-                    <div class="mt-6 flex justify-between">
-                        <button type="button" @click="step = 2" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button type="button" @click="step = 2" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">Lanjutkan</button>
                     </div>
                 </div>
 
                 {{-- Step 4: Add-ons --}}
-                <div x-show="step === 4" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Add-ons</h2>
-                    <p class="text-sm text-muted">Optional extras to enhance your trip.</p>
+                <div x-show="step === 4" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-slate-100 pb-4 mb-6">
+                        <h2 class="text-xl font-bold text-slate-900">Layanan Tambahan</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Pilih fasilitas & perlengkapan ekstra untuk menyempurnakan tur Anda.</p>
+                    </div>
 
-                    <div class="mt-5 space-y-3">
+                    <div class="space-y-3">
                         <template x-if="addons.length === 0">
-                            <p class="text-sm text-muted">No add-ons available for this tour.</p>
+                            <div class="rounded-2xl border border-dashed border-slate-200 p-6 text-center">
+                                <p class="text-xs font-medium text-slate-400">Tidak ada layanan tambahan tersedia untuk paket ini.</p>
+                            </div>
                         </template>
                         <template x-for="addon in addons" :key="addon.id">
-                            <label class="flex items-center justify-between rounded-lg border px-4 py-3 cursor-pointer"
-                                   :class="selectedAddons[addon.id] ? 'border-primary bg-primary-50/50' : 'border-slate-200'">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" :checked="!!selectedAddons[addon.id]" @change="toggleAddon(addon.id)" class="h-4 w-4 rounded text-primary focus:ring-primary">
+                            <label class="flex items-center justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
+                                   :class="selectedAddons[addon.id] ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
+                                <div class="flex items-center gap-3.5">
+                                    <input type="checkbox" :checked="!!selectedAddons[addon.id]" @change="toggleAddon(addon.id)" class="h-5 w-5 rounded-md text-emerald-600 focus:ring-emerald-500 border-slate-300">
                                     <div>
-                                        <p class="text-sm font-semibold text-ink" x-text="addon.name"></p>
-                                        <p class="text-xs text-muted" x-text="addon.description"></p>
+                                        <p class="text-sm font-bold text-slate-900" x-text="addon.name"></p>
+                                        <p class="text-xs text-slate-500 mt-0.5" x-text="addon.description"></p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-3">
+                                <div class="flex items-center gap-4">
                                     <template x-if="selectedAddons[addon.id]">
-                                        <div class="flex items-center gap-2">
-                                            <button type="button" @click.prevent="changeQty(addon.id, -1)" class="flex h-6 w-6 items-center justify-center rounded-full border border-slate-300">−</button>
-                                            <span class="w-4 text-center text-sm" x-text="selectedAddons[addon.id]"></span>
-                                            <button type="button" @click.prevent="changeQty(addon.id, 1)" class="flex h-6 w-6 items-center justify-center rounded-full border border-slate-300">+</button>
+                                        <div class="flex items-center gap-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                                            <button type="button" @click.prevent="changeQty(addon.id, -1)" class="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-xs">−</button>
+                                            <span class="w-5 text-center text-xs font-bold text-slate-900" x-text="selectedAddons[addon.id]"></span>
+                                            <button type="button" @click.prevent="changeQty(addon.id, 1)" class="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-xs">+</button>
                                         </div>
                                     </template>
-                                    <span class="text-sm font-semibold text-primary shrink-0" x-text="formatRp(addon.price)"></span>
+                                    <span class="text-sm font-extrabold text-slate-900 shrink-0" x-text="formatRp(addon.price)"></span>
                                 </div>
                             </label>
                         </template>
@@ -169,56 +216,96 @@
                         </template>
                     </template>
 
-                    <div class="mt-6 flex justify-between">
-                        <button type="button" @click="step = 3" class="btn-outline">Back</button>
-                        <button type="button" @click="goNext()" class="btn-primary">Lanjutkan</button>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button type="button" @click="step = 3" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">Lanjutkan</button>
                     </div>
                 </div>
 
-                {{-- Step 5: Beri Ulasan --}}
-                <div x-show="step === 5" class="card p-6">
-                    <h2 class="text-lg font-bold text-ink">Periksa &amp; Promo</h2>
+                {{-- Step 5: Review & Confirm --}}
+                <div x-show="step === 5" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-slate-100 pb-4 mb-6">
+                        <h2 class="text-xl font-bold text-slate-900">Periksa & Konfirmasi</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Gunakan kode promo dan setujui ketentuan untuk menyelesaikan pemesanan.</p>
+                    </div>
 
-                    <div class="mt-4">
-                        <label class="label">Promo Code <span class="text-muted font-normal">(optional)</span></label>
-                        <div class="flex gap-2">
-                            <input type="text" name="promo_code" x-model="promoCode" @input.debounce.500ms="refreshEstimate()" placeholder="e.g. SUMMER10" class="input uppercase">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kode Promo / Kupon <span class="text-slate-400 font-normal">(Opsional)</span></label>
+                            <div class="flex gap-2">
+                                <input type="text" name="promo_code" x-model="promoCode" @input.debounce.500ms="refreshEstimate()" placeholder="Contoh: LIBURAN2026" class="w-full uppercase rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 font-bold focus:border-emerald-500 focus:ring-emerald-500">
+                            </div>
+                            <p class="mt-2 text-xs font-semibold" x-show="promoMessage" :class="promoMessage && promoMessage.type === 'applied' ? 'text-emerald-600' : 'text-red-600'" x-text="promoMessage ? promoMessage.text : ''"></p>
                         </div>
-                        <p class="mt-1.5 text-sm" x-show="promoMessage" :class="promoMessage && promoMessage.type === 'applied' ? 'text-emerald-600' : 'text-red-600'" x-text="promoMessage ? promoMessage.text : ''"></p>
+
+                        <div class="pt-4 border-t border-slate-100">
+                            <label for="terms" class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" name="terms" required id="terms" class="mt-0.5 h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
+                                <span class="text-xs text-slate-600 leading-relaxed">
+                                    Saya telah membaca dan menyetujui <a href="#" class="font-bold text-emerald-600 underline">Syarat &amp; Ketentuan</a> serta <a href="#" class="font-bold text-emerald-600 underline">Kebijakan Pembatalan</a> yang berlaku.
+                                </span>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="mt-6 flex items-start gap-2">
-                        <input type="checkbox" name="terms" required id="terms" class="mt-0.5 h-4 w-4 rounded text-primary focus:ring-primary">
-                        <label for="terms" class="text-sm text-muted">I agree to the <span class="text-primary font-medium">Terms &amp; Conditions</span> and <span class="text-primary font-medium">Batallation Policy</span>.</label>
-                    </div>
-
-                    <div class="mt-6 flex justify-between">
-                        <button type="button" @click="step = 4" class="btn-outline">Back</button>
-                        <button type="submit" :disabled="submitting" class="btn-accent">
-                            <span x-show="!submitting">Konfirmasi Pesanan</span>
-                            <span x-show="submitting" x-cloak>Processing…</span>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button type="button" @click="step = 4" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
+                        <button type="submit" :disabled="submitting" class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-7 py-3 text-sm font-extrabold text-white shadow-md hover:bg-amber-600 transition disabled:opacity-50">
+                            <span x-show="!submitting">Konfirmasi &amp; Bayar</span>
+                            <span x-show="submitting" x-cloak class="flex items-center gap-2">
+                                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                Memproses...
+                            </span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            {{-- Live summary sidebar --}}
+            {{-- Live Order Summary Sidebar --}}
             <div class="lg:col-span-1">
-                <div class="card sticky top-24 p-6">
-                    <h3 class="font-bold text-ink">Ringkasan Harga</h3>
-                    <div class="mt-4 space-y-2 text-sm">
-                        <div class="flex justify-between"><span class="text-muted">Dewasa × <span x-text="counts.adult"></span></span><span x-text="formatRp(estimate?.price_adult * counts.adult || 0)"></span></div>
-                        <div class="flex justify-between" x-show="counts.child > 0"><span class="text-muted">Anak-anak × <span x-text="counts.child"></span></span><span x-text="formatRp(estimate?.price_child * counts.child || 0)"></span></div>
-                        <div class="flex justify-between" x-show="counts.infant > 0"><span class="text-muted">Bayi × <span x-text="counts.infant"></span></span><span x-text="formatRp(estimate?.price_infant * counts.infant || 0)"></span></div>
-                        <div class="flex justify-between" x-show="estimate && parseFloat(estimate.addons_total) > 0"><span class="text-muted">Add-ons</span><span x-text="formatRp(estimate?.addons_total || 0)"></span></div>
-                        <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-muted">Subtotal</span><span x-text="formatRp(estimate?.subtotal || 0)"></span></div>
-                        <div class="flex justify-between text-emerald-600" x-show="estimate && parseFloat(estimate.discount_amount) > 0"><span>Discount</span><span x-text="'- ' + formatRp(estimate?.discount_amount || 0)"></span></div>
-                        <div class="flex justify-between border-t border-slate-100 pt-3 text-base font-bold text-ink">
-                            <span>Total</span>
-                            <span x-text="formatRp(estimate?.total_amount || 0)"></span>
+                <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sticky top-24">
+                    <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Ringkasan Biaya</h3>
+                    
+                    <div class="mt-4 space-y-2.5 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-500">Dewasa × <span class="font-bold text-slate-700" x-text="counts.adult"></span></span>
+                            <span class="font-semibold text-slate-900" x-text="formatRp(estimate?.price_adult * counts.adult || 0)"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center" x-show="counts.child > 0">
+                            <span class="text-slate-500">Anak-anak × <span class="font-bold text-slate-700" x-text="counts.child"></span></span>
+                            <span class="font-semibold text-slate-900" x-text="formatRp(estimate?.price_child * counts.child || 0)"></span>
+                        </div>
+
+                        <div class="flex justify-between items-center" x-show="counts.infant > 0">
+                            <span class="text-slate-500">Bayi × <span class="font-bold text-slate-700" x-text="counts.infant"></span></span>
+                            <span class="font-semibold text-slate-900" x-text="formatRp(estimate?.price_infant * counts.infant || 0)"></span>
+                        </div>
+
+                        <div class="flex justify-between items-center" x-show="estimate && parseFloat(estimate.addons_total) > 0">
+                            <span class="text-slate-500">Layanan Tambahan</span>
+                            <span class="font-semibold text-slate-900" x-text="formatRp(estimate?.addons_total || 0)"></span>
+                        </div>
+
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-2.5">
+                            <span class="text-slate-500 font-medium">Subtotal</span>
+                            <span class="font-bold text-slate-900" x-text="formatRp(estimate?.subtotal || 0)"></span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-emerald-600 font-semibold" x-show="estimate && parseFloat(estimate.discount_amount) > 0">
+                            <span>Diskon Promo</span>
+                            <span x-text="'- ' + formatRp(estimate?.discount_amount || 0)"></span>
+                        </div>
+
+                        <div class="flex justify-between items-baseline border-t border-slate-200/80 pt-3 text-sm font-bold text-slate-900">
+                            <span>Total Biaya</span>
+                            <span class="text-lg font-extrabold text-emerald-600" x-text="formatRp(estimate?.total_amount || 0)"></span>
                         </div>
                     </div>
-                    <p class="mt-3 text-xs text-muted">Final pricing is always calculated and verified by our server before your booking is created.</p>
+
+                    <div class="mt-5 rounded-2xl bg-slate-50 p-3 text-[11px] text-slate-400 border border-slate-100 leading-relaxed">
+                        Kalkulasi akhir akan diverifikasi kembali secara otomatis oleh server sebelum reservasi Anda dibuat.
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,7 +317,7 @@ function bookingForm(config) {
     return {
         step: 1,
         completedSteps: [],
-        steps: ['Perjalanan', 'Peserta', 'Data Diri', 'Tambahan', 'Beri Ulasan'],
+        steps: ['Perjalanan', 'Peserta', 'Data Diri', 'Tambahan', 'Konfirmasi'],
         availabilityId: config.availabilityId,
         remainingQuota: config.remainingQuota,
         addons: config.addons,
