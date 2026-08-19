@@ -50,6 +50,11 @@
                     <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
                 </div>
 
+                <a href="{{ route('auth.google') }}" class="w-full flex justify-center items-center gap-2 mt-4 py-2 px-4 border rounded-md hover:bg-gray-50">
+    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+    Login dengan Google
+</a>
+
                 {{-- Ingat Saya --}}
                 <div class="flex items-center">
                     <label class="flex items-center gap-2.5 cursor-pointer">

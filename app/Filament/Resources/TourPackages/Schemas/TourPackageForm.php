@@ -62,6 +62,7 @@ class TourPackageForm
                             ->helperText('Leave empty for no limit.'),
                         FileUpload::make('cover_image')
                             ->image()
+                            ->disk('public')
                             ->directory('tour-packages')
                             ->maxSize(3072)
                             ->columnSpanFull(),

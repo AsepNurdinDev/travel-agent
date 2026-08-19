@@ -91,10 +91,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/invoices-list', [InvoiceController::class, 'index'])->name('invoices.index');
             Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');
 
-            // Profile (Dukungan untuk 'account.profile' & 'account.profile.edit')
+            // Profile
             Route::get('/profile', [AccountProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/edit', [AccountProfileController::class, 'edit'])->name('profile.edit');
-            Route::put('/profile', [AccountProfileController::class, 'update'])->name('profile.update');
+            
+            // DUKUNG METHOD PUT DAN PATCH AGAR FORM PROFILE TIDAK ERROR 405
+            Route::match(['put', 'patch'], '/profile', [AccountProfileController::class, 'update'])->name('profile.update');
 
             // Password
             Route::get('/password', [AccountProfileController::class, 'password'])->name('password');

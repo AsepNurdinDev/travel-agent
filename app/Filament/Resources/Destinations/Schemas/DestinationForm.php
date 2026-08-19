@@ -22,7 +22,7 @@ class DestinationForm
             TextInput::make('slug')->required()->unique(ignoreRecord: true)->maxLength(255),
             TextInput::make('country')->required()->maxLength(255),
             TextInput::make('city')->maxLength(255),
-            FileUpload::make('image')->image()->directory('destinations'),
+            FileUpload::make('image')->image()->disk('public')->directory('destinations'),
             Textarea::make('description')->columnSpanFull(),
             Toggle::make('is_active')->default(true),
         ]);

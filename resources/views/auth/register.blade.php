@@ -97,6 +97,11 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
                 </div>
 
+                <a href="{{ route('auth.google') }}" class="w-full flex justify-center items-center gap-2 mt-4 py-2 px-4 border rounded-md hover:bg-gray-50">
+    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+    Login dengan Google
+</a>
+
                 {{-- Terms & Conditions Checkbox --}}
                 <div class="pt-1">
                     <label class="flex items-start gap-3 cursor-pointer">

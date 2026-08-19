@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'google_id', 'email_verified_at'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser
 {
@@ -22,6 +22,17 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory, HasRoles, Notifiable;
 
     protected $guard_name = 'web';
+
+    /**
+     * Bootstrap model events.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (User $user) {
+            // Otomatis hapus record customer terkait saat User dihapus dari Filament
+            $user->customer()->delete();
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

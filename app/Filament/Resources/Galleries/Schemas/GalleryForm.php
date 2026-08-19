@@ -23,7 +23,7 @@ class GalleryForm
                 ->label('Destination')
                 ->options(fn () => Destination::pluck('name', 'id'))
                 ->searchable(),
-            FileUpload::make('image')->image()->directory('gallery')->required(),
+            FileUpload::make('image')->image()->disk('public')->directory('gallery')->required(),
             TextInput::make('caption')->maxLength(255),
         ]);
     }
