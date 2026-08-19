@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\LoginWithGoogleNotification;
 use App\Services\Customer\CustomerService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,7 +23,7 @@ class GoogleController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function callback()
+    public function callback(Request $request) // <-- Tambahkan Request $request di sini
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
 
@@ -29,42 +31,47 @@ class GoogleController extends Controller
 
         if (! $user) {
             $user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'google_id' => $googleUser->getId(),
-                'password' => bcrypt(Str::random(24)),
-                // Google sudah verifikasi email pemiliknya sendiri
+                'name'              => $googleUser->getName(),
+                'email'             => $googleUser->getEmail(),
+                'google_id'         => $googleUser->getId(),
+                'password'          => bcrypt(Str::random(24)),
                 'email_verified_at' => now(),
             ]);
 
-            // sinkronkan ke tabel customers, sama seperti registrasi manual
+            // Sinkronkan ke tabel customers
             $this->customerService->findOrCreateByEmail([
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => null, // Google tidak kasih nomor telepon
+                'name'    => $user->name,
+                'email'   => $user->email,
+                'phone'   => null,
                 'user_id' => $user->id,
             ]);
 
             event(new Registered($user));
-        } elseif (! $user->google_id) {
-            // user lama yang daftar manual, sekarang login pakai google, link akunnya
-            $user->update([
-                'google_id' => $googleUser->getId(),
-                'email_verified_at' => $user->email_verified_at ?? now(),
-            ]);
+        } else {
+            // Jika user sudah ada tetapi google_id belum terisi, hubungkan
+            if (! $user->google_id) {
+                $user->update([
+                    'google_id'         => $googleUser->getId(),
+                    'email_verified_at' => $user->email_verified_at ?? now(),
+                ]);
+            }
 
-            // user lama ini kemungkinan sudah punya record Customer dari registrasi awal,
-            // tapi jaga-jaga kalau belum ada (misal dulu dibuat manual lewat seeder/tinker)
+            // Pastikan customer service selalu memperbarui user_id untuk user yang aktif
             $this->customerService->findOrCreateByEmail([
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => null,
+                'name'    => $user->name,
+                'email'   => $user->email,
+                'phone'   => null,
                 'user_id' => $user->id,
             ]);
         }
 
-        Auth::login($user, true);
+        // Login session
+        Auth::guard('web')->login($user, true);
+        $request->session()->regenerate();
 
-        return redirect()->intended('/account');
+        // Kirim email notifikasi
+        $user->notify(new LoginWithGoogleNotification());
+
+        return redirect()->intended(route('account.dashboard'));
     }
 }
