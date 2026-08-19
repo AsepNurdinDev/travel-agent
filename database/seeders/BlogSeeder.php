@@ -14,13 +14,12 @@ class BlogSeeder extends Seeder
         $categories = BlogCategory::factory()->count(4)->create();
         $author = User::query()->first();
 
-        $categories->each(function (BlogCategory $category) use ($author) {
-            BlogPost::factory()
-                ->count(random_int(2, 4))
-                ->create([
-                    'blog_category_id' => $category->id,
-                    'user_id' => $author?->id,
-                ]);
+        // Exactly 10 blog posts total, spread across the 4 categories.
+        collect(range(1, 10))->each(function () use ($categories, $author) {
+            BlogPost::factory()->create([
+                'blog_category_id' => $categories->random()->id,
+                'user_id' => $author?->id,
+            ]);
         });
     }
 }

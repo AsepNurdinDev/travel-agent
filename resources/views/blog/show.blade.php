@@ -61,7 +61,7 @@
 
                 {{-- Main Article Text --}}
                 <div class="prose prose-slate prose-lg max-w-none text-slate-700 leading-relaxed font-normal whitespace-pre-line">
-                    {!! nl2br(e($blogPost->content)) !!}
+                    {!! nl2br(($blogPost->content)) !!}
                 </div>
 
                 {{-- Article Footer Nav --}}

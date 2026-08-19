@@ -36,7 +36,7 @@ class BlogPostForm
                 ->default(fn () => Auth::id())
                 ->searchable()
                 ->required(),
-            FileUpload::make('featured_image')->image()->directory('blog'),
+            FileUpload::make('featured_image')->image()->disk('public')->directory('blog'),
             Textarea::make('excerpt')->maxLength(500)->columnSpanFull(),
             RichEditor::make('content')->required()->columnSpanFull(),
             Toggle::make('is_published')->live(),

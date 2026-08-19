@@ -10,15 +10,16 @@ class HotelSeeder extends Seeder
 {
     public function run(): void
     {
-        Destination::all()->each(function (Destination $destination) {
-            Hotel::factory()
-                ->count(random_int(1, 2))
-                ->create(['destination_id' => $destination->id])
-                ->each(function (Hotel $hotel) {
-                    $hotel->rooms()->saveMany(
-                        \App\Models\HotelRoom::factory()->count(3)->make()
-                    );
-                });
+        $destinations = Destination::all();
+
+        // Exactly 10 hotels total, spread across whichever destinations exist.
+        collect(range(1, 10))->each(function () use ($destinations) {
+            $hotel = Hotel::factory()
+                ->create(['destination_id' => $destinations->random()->id]);
+
+            $hotel->rooms()->saveMany(
+                \App\Models\HotelRoom::factory()->count(3)->make()
+            );
         });
     }
 }

@@ -11,12 +11,13 @@ class GallerySeeder extends Seeder
 {
     public function run(): void
     {
-        TourPackage::query()->inRandomOrder()->limit(10)->get()->each(function (TourPackage $package) {
-            Gallery::factory()->count(3)->create(['tour_package_id' => $package->id]);
+        // Exactly 10 galleries total: 6 attached to tour packages, 4 to destinations.
+        TourPackage::query()->inRandomOrder()->limit(6)->get()->each(function (TourPackage $package) {
+            Gallery::factory()->count(1)->create(['tour_package_id' => $package->id]);
         });
 
-        Destination::query()->inRandomOrder()->limit(5)->get()->each(function (Destination $destination) {
-            Gallery::factory()->count(2)->create(['destination_id' => $destination->id]);
+        Destination::query()->inRandomOrder()->limit(4)->get()->each(function (Destination $destination) {
+            Gallery::factory()->count(1)->create(['destination_id' => $destination->id]);
         });
     }
 }

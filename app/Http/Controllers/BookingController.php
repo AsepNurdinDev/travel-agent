@@ -125,7 +125,6 @@ class BookingController extends Controller
             'promo_code' => ['nullable', 'string'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:500'],
             'identity_number' => ['nullable', 'string', 'max:50'],

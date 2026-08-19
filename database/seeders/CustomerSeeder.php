@@ -21,7 +21,8 @@ class CustomerSeeder extends Seeder
         // Random customers with no site account (walk-in / phone bookings
         // entered by staff via Filament) — these are intentionally NOT
         // linked to a User, since they were never meant to log in.
-        Customer::factory()->count(24)->create();
+        // 9 random + 1 test customer below = 10 total.
+        Customer::factory()->count(9)->create();
 
         // One fully-wired test account: User -> Customer, so the full
         // register/login/dashboard/bookings/invoices flow can actually be

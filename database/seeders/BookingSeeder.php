@@ -43,7 +43,7 @@ class BookingSeeder extends Seeder
             }
         }
 
-        foreach (range(1, 20) as $i) {
+        foreach (range(1, 10) as $i) {
             $availability = $availabilities->random();
             $customer = $customers->random();
 

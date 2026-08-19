@@ -13,9 +13,28 @@
         estimateUrl: '{{ route('booking.estimate') }}',
         csrf: '{{ csrf_token() }}',
     })"
-    x-init="refreshEstimate()"
+    x-init="refreshEstimate(); {{ $errors->any() || session('error') ? 'step = ' . ($errors->has('name') || $errors->has('phone') || $errors->has('address') || $errors->has('identity_number') || $errors->has('date_of_birth') ? 3 : ($errors->has('adult_count') || $errors->has('child_count') || $errors->has('infant_count') ? 2 : 5)) . ';' : '' }}"
     class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
 >
+    {{-- Error banner: shown regardless of which step Alpine lands on after a
+         failed submit, so a rejected booking is never silently invisible. --}}
+    @if (session('error'))
+        <div class="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            <p class="font-bold mb-1">Pemesanan belum bisa diproses, mohon periksa kembali:</p>
+            <ul class="list-disc list-inside space-y-0.5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {{-- Stepper Progress --}}
     <div class="mb-10 overflow-x-auto pb-4 pt-1">
         <div class="flex items-center justify-between min-w-[600px] max-w-4xl mx-auto">
