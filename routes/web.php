@@ -51,14 +51,17 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 |--------------------------------------------------------------------------
 */
 
+// Route yang HANYA butuh login (tanpa wajib verifikasi email terlebih dahulu)
 Route::middleware('auth')->group(function () {
-
-    // Alias global untuk 'dashboard' dan 'profile.edit' bawaan Breeze
     Route::get('/dashboard', function () {
         return redirect()->route('account.dashboard');
     })->name('dashboard');
 
     Route::get('/profile', [AccountProfileController::class, 'edit'])->name('profile.edit');
+});
+
+// Route yang WAJIB Login DAN Terverifikasi Email (auth + verified)
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // Booking Process
     Route::get('/booking/{availability}/create', [BookingController::class, 'create'])->name('booking.create');
