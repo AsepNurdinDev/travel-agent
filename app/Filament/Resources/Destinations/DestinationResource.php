@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Destinations;
 
-use UnitEnum;
 use App\Filament\Resources\Destinations\Pages\CreateDestination;
 use App\Filament\Resources\Destinations\Pages\EditDestination;
 use App\Filament\Resources\Destinations\Pages\ListDestinations;
@@ -14,14 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class DestinationResource extends Resource
 {
     protected static ?string $model = Destination::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke ikon pin lokasi (Heroicon MapPin)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
 
+    // Tetap menggunakan grup 'Master Data' sesuai kodenya
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Destinasi Wisata';
+
+    // Urutan posisi menu di dalam grup Master Data
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'name';
 

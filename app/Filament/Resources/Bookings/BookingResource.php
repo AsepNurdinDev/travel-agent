@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Bookings;
 
-use UnitEnum;
 use App\Filament\Resources\Bookings\Pages\CreateBooking;
 use App\Filament\Resources\Bookings\Pages\EditBooking;
 use App\Filament\Resources\Bookings\Pages\ListBookings;
@@ -16,14 +15,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke ikon keranjang belanja (Heroicon ShoppingBag)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
+    // Tetap menggunakan grup 'Transactions'
     protected static string|UnitEnum|null $navigationGroup = 'Transactions';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Pemesanan';
+
+    // Urutan posisi menu di dalam grup Transactions
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'booking_code';
 

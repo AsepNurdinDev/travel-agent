@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Promotions;
 
-use UnitEnum;
 use App\Filament\Resources\Promotions\Pages\CreatePromotion;
 use App\Filament\Resources\Promotions\Pages\EditPromotion;
 use App\Filament\Resources\Promotions\Pages\ListPromotions;
@@ -15,14 +14,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class PromotionResource extends Resource
 {
     protected static ?string $model = Promotion::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke ikon diskon/promosi (Heroicon Ticket)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
 
+    // Tetap menggunakan grup 'Master Data'
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Promosi & Diskon';
+
+    // Urutan posisi menu di dalam grup Master Data (berada di bawah Paket Wisata)
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'name';
 

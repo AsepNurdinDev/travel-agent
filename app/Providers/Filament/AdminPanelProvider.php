@@ -2,11 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Dashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -27,9 +27,17 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Travel Agent Admin')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Sky,
+                'success' => Color::Emerald,
+                'warning' => Color::Amber,
+                'danger' => Color::Rose,
+                'info' => Color::Sky,
             ])
+            ->font('Plus Jakarta Sans')
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth('full')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -38,8 +46,10 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                // StatsOverview, BookingChart, RevenueChart, RecentBookings and
-                // UpcomingTrips are auto-registered by discoverWidgets() below.
+                // WelcomeBanner, StatsOverview, BookingChart, RevenueChart,
+                // RecentBookings and UpcomingTrips are auto-registered by
+                // discoverWidgets() below, and ordered explicitly inside
+                // App\Filament\Pages\Dashboard::getWidgets().
             ])
             ->middleware([
                 EncryptCookies::class,
