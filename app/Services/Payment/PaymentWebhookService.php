@@ -3,13 +3,13 @@
 namespace App\Services\Payment;
 
 use App\Contracts\PaymentGatewayInterface;
-use RuntimeException;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 /**
- * Entry point for gateway webhook notifications. Not wired to a live route
- * yet (production webhook handling is out of scope for this pass) — this
- * class only defines how an incoming payload will be validated and routed
- * to PaymentService once a real gateway is connected.
+ * Entry point for gateway webhook notifications. Route handler calls
+ * handle() dan cukup percaya hasilnya — semua verifikasi signature dan
+ * mutasi keuangan sudah didelegasikan ke gateway + PaymentService.
  */
 class PaymentWebhookService
 {
@@ -24,11 +24,14 @@ class PaymentWebhookService
      */
     public function handle(array $payload): void
     {
-        // Intentionally not implemented — payment gateway integration is
-        // out of scope for this pass. When implemented, this must verify
-        // the payload signature via $this->gateway->handleWebhook() before
-        // trusting anything in it, then confirm the matching Payment
-        // through PaymentService rather than writing to it directly.
-        throw new RuntimeException('Payment webhook handling is not implemented yet.');
+        try {
+            $result = $this->gateway->handleWebhook($payload);
+        } catch (Throwable $e) {
+            Log::warning('Midtrans webhook rejected: '.$e->getMessage(), ['payload' => $payload]);
+
+            throw $e;
+        }
+
+        $this->paymentService->confirmGatewayPayment($result);
     }
 }

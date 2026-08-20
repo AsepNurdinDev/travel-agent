@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\PaymentGatewayInterface;
 use App\Models\Booking;
 use App\Models\Promotion;
 use App\Models\TourPackageAvailability;
@@ -24,6 +25,7 @@ class BookingController extends Controller
         private readonly BookingService $bookingService,
         private readonly PaymentService $paymentService,
         private readonly CustomerService $customerService,
+        private readonly PaymentGatewayInterface $gateway,
     ) {
     }
 
@@ -193,30 +195,26 @@ class BookingController extends Controller
     }
 
     /**
-     * Record a payment against the booking.
+     * Mulai transaksi pembayaran via Midtrans Snap. TIDAK langsung menandai
+     * booking sebagai lunas — hanya membuat Payment berstatus 'pending' dan
+     * meminta snap_token. Konfirmasi final terjadi lewat webhook
+     * (MidtransWebhookController -> PaymentWebhookService -> PaymentService::confirmGatewayPayment()).
      *
-     * NOTE — Midtrans integration point: per project scope, this does not
-     * call a live payment gateway. It records the payment the same way
-     * finance staff would confirm a manual bank transfer, via the existing
-     * authoritative PaymentService (amount is always validated against the
-     * real outstanding balance server-side — see PaymentService::recordManualPayment).
-     * When Midtrans is wired up, this action should instead create a
-     * pending Payment + redirect to the gateway, and PaymentWebhookService
-     * would call PaymentService on the callback.
+     * Dipanggil via fetch() dari checkout.blade.php, bukan form submit biasa
+     * — makanya balikannya JSON, bukan redirect.
      */
-    public function pay(Request $request, Booking $booking): RedirectResponse
+    public function pay(Request $request, Booking $booking): JsonResponse
     {
         $this->authorizeOwnership($booking);
 
         $data = $request->validate([
             'payment_type' => ['required', 'in:deposit,full'],
-            'method' => ['required', 'in:bank_transfer,credit_card,e_wallet'],
         ]);
 
         $balanceDue = (float) $booking->balance_due;
 
         if ($balanceDue <= 0) {
-            return redirect()->route('booking.success', $booking);
+            return response()->json(['redirect' => route('booking.success', $booking)]);
         }
 
         $amount = $data['payment_type'] === 'full'
@@ -224,16 +222,16 @@ class BookingController extends Controller
             : round(max($balanceDue * 0.3, min($balanceDue, 100000)), 2);
 
         try {
-            $this->paymentService->recordManualPayment(
-                booking: $booking,
-                amount: $amount,
-                method: $data['method'],
-            );
+            $payment = $this->paymentService->createPendingGatewayPayment($booking, $amount);
+            $charge = $this->gateway->charge($payment);
         } catch (RuntimeException $e) {
-            return back()->with('error', $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 422);
         }
 
-        return redirect()->route('booking.success', $booking->fresh());
+        return response()->json([
+            'snap_token' => $charge['snap_token'],
+            'client_key' => $charge['client_key'],
+        ]);
     }
 
     public function success(Booking $booking): View

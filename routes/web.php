@@ -14,6 +14,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TourPackageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MidtransWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::get('/about', AboutController::class)->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/contact-page', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+// Midtrans Webhook (dipanggil server Midtrans, bukan user — tanpa auth middleware)
+Route::post('/midtrans/notification', MidtransWebhookController::class)->name('midtrans.notification');
 
 
 /*

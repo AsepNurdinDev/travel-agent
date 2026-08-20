@@ -1,12 +1,72 @@
 <x-app-layout title="Pembayaran">
+<script
+    src="{{ config('services.midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+    data-client-key="{{ config('services.midtrans.client_key') }}"
+></script>
+
 @php
     $balanceDue = (float) $booking->balance_due;
     $depositAmount = round(max($balanceDue * 0.3, min($balanceDue, 100000)), 2);
 @endphp
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ paymentType: 'full', method: 'bank_transfer' }">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+     x-data="{
+        paymentType: 'full',
+        loading: false,
+        errorMessage: null,
+        pay() {
+            this.loading = true;
+            this.errorMessage = null;
+
+            fetch('{{ route('booking.pay', $booking) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                },
+                body: JSON.stringify({ payment_type: this.paymentType }),
+            })
+            .then(async (response) => {
+                const data = await response.json();
+
+                if (! response.ok) {
+                    throw new Error(data.error || 'Gagal memulai pembayaran. Silakan coba lagi.');
+                }
+
+                return data;
+            })
+            .then((data) => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+
+                this.loading = false;
+
+                window.snap.pay(data.snap_token, {
+                    onSuccess: () => {
+                        window.location.href = '{{ route('booking.success', $booking) }}';
+                    },
+                    onPending: () => {
+                        window.location.href = '{{ route('booking.success', $booking) }}';
+                    },
+                    onError: () => {
+                        this.errorMessage = 'Pembayaran gagal diproses. Silakan coba lagi.';
+                    },
+                    onClose: () => {
+                        // User menutup popup tanpa menyelesaikan pembayaran — biarkan mereka klik lagi.
+                    },
+                });
+            })
+            .catch((error) => {
+                this.loading = false;
+                this.errorMessage = error.message;
+            });
+        },
+     }">
     <div class="mx-auto max-w-5xl">
-        
+
         {{-- Breadcrumb Steps --}}
         <div class="mb-8 flex items-center gap-2.5 text-xs font-semibold">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 border border-emerald-200/60">
@@ -24,10 +84,10 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            
+
             {{-- Main Form Area --}}
             <div class="lg:col-span-3 space-y-6">
-                
+
                 {{-- Tour & Booking Info Summary Card --}}
                 <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
                     <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
@@ -58,9 +118,9 @@
                 {{-- Payment Options Card --}}
                 <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
                     <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Pilih Nominal Pembayaran</h3>
-                    
+
                     <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                        <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200" 
+                        <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
                                :class="paymentType === 'deposit' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
                             <input type="radio" x-model="paymentType" value="deposit" class="sr-only">
                             <div>
@@ -73,7 +133,7 @@
                             <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">Amankan kuota Anda sekarang, pelunasan dapat dilakukan sebelum keberangkatan.</p>
                         </label>
 
-                        <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200" 
+                        <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
                                :class="paymentType === 'full' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
                             <input type="radio" x-model="paymentType" value="full" class="sr-only">
                             <div>
@@ -87,48 +147,29 @@
                         </label>
                     </div>
 
-                    {{-- Payment Method Selection --}}
-                    <h3 class="mt-8 text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Metode Pembayaran</h3>
-                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        @foreach ([
-                            ['id'=>'bank_transfer', 'label'=>'Transfer Bank', 'icon'=>'M3 10h18M7 15h1m4 0h1m4 0h1M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
-                            ['id'=>'e_wallet', 'label'=>'Dompet Digital', 'icon'=>'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'],
-                            ['id'=>'credit_card', 'label'=>'Kartu Kredit', 'icon'=>'M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z']
-                        ] as $m)
-                            <label class="flex flex-col items-center justify-center rounded-2xl border p-3.5 text-center cursor-pointer transition-all duration-200" 
-                                   :class="method === '{{ $m['id'] }}' ? 'border-emerald-500 bg-emerald-50/30 text-emerald-700 ring-1 ring-emerald-500/20' : 'border-slate-200/80 text-slate-600 hover:border-slate-300'">
-                                <input type="radio" x-model="method" value="{{ $m['id'] }}" class="sr-only">
-                                <svg class="h-5 w-5 mb-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ $m['icon'] }}"/>
-                                </svg>
-                                <span class="text-xs font-bold">{{ $m['label'] }}</span>
-                            </label>
-                        @endforeach
-                    </div>
-
                     {{-- Notice Alert --}}
-                    <div class="mt-6 rounded-2xl bg-amber-50/80 border border-amber-200/60 p-4 text-xs text-amber-900 leading-relaxed flex items-start gap-3">
-                        <svg class="h-5 w-5 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="mt-6 rounded-2xl bg-sky-50/80 border border-sky-200/60 p-4 text-xs text-sky-900 leading-relaxed flex items-start gap-3">
+                        <svg class="h-5 w-5 text-sky-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         <div>
-                            <p class="font-bold">Informasi Pembayaran Simulasi</p>
-                            <p class="mt-0.5 text-amber-800/90">Gerbang pembayaran otomatis akan segera hadir. Konfirmasi pembayaran pada halaman ini akan diverifikasi secara manual oleh tim Admin kami.</p>
+                            <p class="font-bold">Pembayaran Aman via Midtrans</p>
+                            <p class="mt-0.5 text-sky-800/90">Anda akan diarahkan ke jendela pembayaran resmi Midtrans, mendukung Transfer Bank/VA, E-Wallet (GoPay, ShopeePay), QRIS, dan Kartu Kredit.</p>
                         </div>
                     </div>
 
-                    {{-- Action Form --}}
-                    <form method="POST" action="{{ route('booking.pay', $booking) }}" class="mt-6">
-                        @csrf
-                        <input type="hidden" name="payment_type" x-bind:value="paymentType">
-                        <input type="hidden" name="method" x-bind:value="method">
-                        <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3.5 text-sm font-extrabold text-white shadow-md hover:bg-amber-600 transition">
-                            <span>Bayar &amp; Konfirmasi Sekarang</span>
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                            </svg>
-                        </button>
-                    </form>
+                    {{-- Error Alert --}}
+                    <div x-show="errorMessage" x-cloak class="mt-4 rounded-2xl bg-red-50 border border-red-200 p-4 text-xs text-red-700 font-medium" x-text="errorMessage"></div>
+
+                    {{-- Action Button --}}
+                    <button type="button" @click="pay()" :disabled="loading"
+                            class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3.5 text-sm font-extrabold text-white shadow-md hover:bg-amber-600 transition disabled:opacity-60 disabled:cursor-not-allowed">
+                        <span x-show="! loading">Bayar Sekarang</span>
+                        <span x-show="loading">Memproses...</span>
+                        <svg x-show="! loading" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
