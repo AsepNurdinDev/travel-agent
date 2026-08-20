@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Hotels;
 
-use UnitEnum;
 use App\Filament\Resources\Hotels\Pages\CreateHotel;
 use App\Filament\Resources\Hotels\Pages\EditHotel;
 use App\Filament\Resources\Hotels\Pages\ListHotels;
@@ -15,14 +14,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class HotelResource extends Resource
 {
     protected static ?string $model = Hotel::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke ikon bangunan/penginapan (Heroicon BuildingOffice2)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
 
+    // Tetap menggunakan grup 'Master Data'
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Hotel & Penginapan';
+
+    // Urutan posisi menu di dalam grup Master Data (berada di bawah Promosi)
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $recordTitleAttribute = 'name';
 

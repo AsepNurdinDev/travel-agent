@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\TourPackages;
 
-use UnitEnum;
 use App\Filament\Resources\TourPackages\Pages\CreateTourPackage;
 use App\Filament\Resources\TourPackages\Pages\EditTourPackage;
 use App\Filament\Resources\TourPackages\Pages\ListTourPackages;
@@ -20,14 +19,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class TourPackageResource extends Resource
 {
     protected static ?string $model = TourPackage::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke ikon koper/wisata (Heroicon Briefcase)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
+    // Tetap menggunakan grup 'Master Data'
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Paket Wisata';
+
+    // Urutan posisi menu di dalam grup Master Data (berada di bawah Kendaraan)
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'name';
 

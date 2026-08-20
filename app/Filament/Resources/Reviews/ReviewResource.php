@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Reviews;
 
-use UnitEnum;
 use App\Filament\Resources\Reviews\Pages\CreateReview;
 use App\Filament\Resources\Reviews\Pages\EditReview;
 use App\Filament\Resources\Reviews\Pages\ListReviews;
@@ -14,14 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ReviewResource extends Resource
 {
     protected static ?string $model = Review::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon bawaan ke icon bintang (Heroicon Star)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
+    // Tetap menggunakan grup 'Content'
     protected static string|UnitEnum|null $navigationGroup = 'Content';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Ulasan & Review';
+
+    // Urutan posisi menu di dalam grup Content (berada di bawah Galeri)
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'title';
 

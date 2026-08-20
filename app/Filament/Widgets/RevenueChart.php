@@ -7,7 +7,11 @@ use Filament\Widgets\ChartWidget;
 
 class RevenueChart extends ChartWidget
 {
-    protected ?string $heading = 'Revenue collected (last 6 months)';
+    protected ?string $heading = 'Pendapatan Terkumpul';
+
+    protected ?string $description = '6 bulan terakhir';
+
+    protected static ?int $sort = -1;
 
     protected function getData(): array
     {
@@ -23,11 +27,15 @@ class RevenueChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Revenue (IDR)',
+                    'label' => 'Pendapatan (Rp)',
                     'data' => $months->map(fn ($m) => (float) ($totals[$m->format('Y-m')] ?? 0))->all(),
+                    'backgroundColor' => '#f59e0b',
+                    'borderColor' => '#d97706',
+                    'borderRadius' => 6,
+                    'maxBarThickness' => 42,
                 ],
             ],
-            'labels' => $months->map(fn ($m) => $m->format('M Y'))->all(),
+            'labels' => $months->map(fn ($m) => $m->translatedFormat('M Y'))->all(),
         ];
     }
 

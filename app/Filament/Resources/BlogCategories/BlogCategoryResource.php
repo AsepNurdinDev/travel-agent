@@ -20,9 +20,17 @@ class BlogCategoryResource extends Resource
 {
     protected static ?string $model = BlogCategory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Menukar icon bawaan dengan Heroicon 'Tag' (atau bisa pakai string 'heroicon-o-tag')
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
+    // Mengubah nama grup di sidebar
     protected static string|UnitEnum|null $navigationGroup = 'Content';
+
+    // Mengubah teks yang tampil pada menu sidebar
+    protected static ?string $navigationLabel = 'Kategori Blog';
+
+    // Menentukan urutan menu di sidebar (angka lebih kecil = posisi lebih atas)
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'name';
 

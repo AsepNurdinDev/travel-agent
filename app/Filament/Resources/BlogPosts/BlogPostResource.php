@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\BlogPosts;
 
-use UnitEnum;
 use App\Filament\Resources\BlogPosts\Pages\CreateBlogPost;
 use App\Filament\Resources\BlogPosts\Pages\EditBlogPost;
 use App\Filament\Resources\BlogPosts\Pages\ListBlogPosts;
@@ -14,14 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Menukar icon bawaan dengan icon dokumen teks (Heroicon DocumentText)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
+    // Disamakan dengan BlogCategoryResource agar berada di grup yang sama
     protected static string|UnitEnum|null $navigationGroup = 'Content';
+
+    // Mengubah teks yang tampil pada menu sidebar
+    protected static ?string $navigationLabel = 'Artikel Blog';
+
+    // Urutan posisi menu (diatur ke 2 agar berada persis di bawah Kategori)
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'title';
 

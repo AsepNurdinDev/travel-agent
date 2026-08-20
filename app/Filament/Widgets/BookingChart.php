@@ -7,7 +7,11 @@ use Filament\Widgets\ChartWidget;
 
 class BookingChart extends ChartWidget
 {
-    protected ?string $heading = 'Bookings (last 30 days)';
+    protected ?string $heading = 'Tren Booking';
+
+    protected ?string $description = '30 hari terakhir';
+
+    protected static ?int $sort = -1;
 
     protected function getData(): array
     {
@@ -22,11 +26,16 @@ class BookingChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Bookings',
+                    'label' => 'Booking',
                     'data' => $days->map(fn ($day) => $counts[$day] ?? 0)->all(),
+                    'borderColor' => '#0ea5e9',
+                    'backgroundColor' => 'rgba(14, 165, 233, 0.15)',
+                    'pointBackgroundColor' => '#0ea5e9',
+                    'tension' => 0.4,
+                    'fill' => true,
                 ],
             ],
-            'labels' => $days->map(fn ($day) => \Illuminate\Support\Carbon::parse($day)->format('d M'))->all(),
+            'labels' => $days->map(fn ($day) => \Illuminate\Support\Carbon::parse($day)->translatedFormat('d M'))->all(),
         ];
     }
 

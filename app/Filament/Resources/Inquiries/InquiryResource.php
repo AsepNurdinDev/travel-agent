@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Inquiries;
 
-use UnitEnum;
 use App\Filament\Resources\Inquiries\Pages\CreateInquiry;
 use App\Filament\Resources\Inquiries\Pages\EditInquiry;
 use App\Filament\Resources\Inquiries\Pages\ListInquiries;
@@ -14,14 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class InquiryResource extends Resource
 {
     protected static ?string $model = Inquiry::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Mengubah icon ke amplop pesan (Heroicon Envelope)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
+    // Menyarankan grup khusus pesan/pesanan, atau bisa dikembalikan ke 'Content' jika diinginkan
     protected static string|UnitEnum|null $navigationGroup = 'Content';
+
+    // Mengubah label menu di sidebar ke Bahasa Indonesia
+    protected static ?string $navigationLabel = 'Pesan & Pertanyaan';
+
+    // Urutan posisi menu di sidebar
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'name';
 
