@@ -114,6 +114,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 });
 
+Route::get('/debug-https', function () {
+    return response()->json([
+        'url' => url('/'),
+        'scheme' => request()->getScheme(),
+        'secure' => request()->isSecure(),
+        'https' => request()->header('X-Forwarded-Proto'),
+        'host' => request()->getHost(),
+    ]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Breeze Authentication
