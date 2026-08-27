@@ -10,11 +10,11 @@
     ];
 @endphp
 
-<header x-data="{ scrolled: false, mobileOpen: false }"
+<header x-data="{ scrolled: false }"
         x-init="scrolled = window.scrollY > 15; window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
         :class="{
-            'bg-white/90 backdrop-blur-xl shadow-lg shadow-slate-900/5 border-slate-200/80 py-2.5': scrolled,
-            'bg-white/60 backdrop-blur-md border-transparent py-4': !scrolled
+            'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-900/5 border-slate-200/80 py-2.5': scrolled,
+            'bg-white/80 backdrop-blur-md border-transparent py-4': !scrolled
         }"
         class="sticky top-0 z-40 border-b transition-all duration-500 ease-out">
     
@@ -110,20 +110,17 @@
             @endauth
         </div>
 
-        {{-- Mobile Animated Hamburger Button --}}
+        {{-- Mobile Hamburger Button (Solid SVG anti-transparent) --}}
         <button @click="mobileOpen = !mobileOpen" 
-                class="lg:hidden relative h-10 w-10 rounded-xl text-slate-700 hover:bg-slate-100/80 transition-colors duration-200 focus:outline-none flex items-center justify-center" 
+                class="lg:hidden relative h-10 w-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-700 hover:bg-slate-200/70 transition-colors duration-200 focus:outline-none flex items-center justify-center shrink-0" 
                 aria-label="Toggle Navigation">
-            <div class="w-5 h-4 relative flex flex-col justify-between items-center">
-                <span :class="mobileOpen ? 'rotate-45 translate-y-1.5 bg-emerald-600' : 'bg-slate-700'" class="w-full h-0.5 rounded-full transition-all duration-300 ease-out origin-center"></span>
-                <span :class="mobileOpen ? 'opacity-0 translate-x-2' : 'opacity-100'" class="w-full h-0.5 bg-slate-700 rounded-full transition-all duration-300 ease-out"></span>
-                <span :class="mobileOpen ? '-rotate-45 -translate-y-2 bg-emerald-600' : 'bg-slate-700'" class="w-full h-0.5 rounded-full transition-all duration-300 ease-out origin-center"></span>
-            </div>
+            <svg class="h-6 w-6 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path x-show="mobileOpen" x-cloak stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </button>
     </nav>
 
-    {{-- Teleport Mobile Menu --}}
-    <template x-teleport="body">
-        <x-mobile-menu :links="$navLinks" />
-    </template>
+    {{-- Mobile Menu Drawer --}}
+    <x-mobile-menu :links="$navLinks" />
 </header>

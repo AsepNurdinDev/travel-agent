@@ -15,7 +15,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex min-h-screen flex-col bg-surface font-sans text-ink">
+<body x-data="{ mobileOpen: false }" class="flex min-h-screen flex-col bg-surface font-sans text-ink">
     <x-navbar />
 
     <main class="flex-1">
