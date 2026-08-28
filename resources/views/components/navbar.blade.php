@@ -10,13 +10,14 @@
     ];
 @endphp
 
+{{-- Header Utama --}}
 <header x-data="{ scrolled: false }"
         x-init="scrolled = window.scrollY > 15; window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
         :class="{
             'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-900/5 border-slate-200/80 py-2.5': scrolled,
             'bg-white/80 backdrop-blur-md border-transparent py-4': !scrolled
         }"
-        class="sticky top-0 z-40 border-b transition-all duration-500 ease-out">
+        class="sticky top-0 z-40 border-b transition-all duration-300 ease-out">
     
     <nav class="container-page flex items-center justify-between" aria-label="Navigasi utama">
         
@@ -39,7 +40,7 @@
                 <a href="{{ route($link['route']) }}"
                    class="relative rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-300 ease-out {{ $isActive ? 'text-emerald-700 font-bold shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/60' }}">
                     @if($isActive)
-                        <span class="absolute inset-0 rounded-full bg-white transition-all duration-300" x-transition:enter="transition ease-out duration-300"></span>
+                        <span class="absolute inset-0 rounded-full bg-white transition-all duration-300"></span>
                     @endif
                     <span class="relative z-10">{{ $link['label'] }}</span>
                 </a>
@@ -61,7 +62,6 @@
                         </svg>
                     </button>
 
-                    {{-- Dropdown Menu --}}
                     <div x-show="open"
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
@@ -70,7 +70,7 @@
                          x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                          x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
                          x-cloak
-                         class="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-xl p-2 shadow-xl shadow-slate-900/10">
+                         class="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-100 bg-white p-2 shadow-xl shadow-slate-900/10">
                         
                         <div class="px-3 py-2 border-b border-slate-100 mb-1">
                             <p class="text-xs font-bold text-slate-900 truncate">{{ auth()->user()->name }}</p>
@@ -110,17 +110,16 @@
             @endauth
         </div>
 
-        {{-- Mobile Hamburger Button (Solid SVG anti-transparent) --}}
-        <button @click="mobileOpen = !mobileOpen" 
+        {{-- Mobile Hamburger Button (Mengirim Event Global ke Alpine) --}}
+        <button @click="$dispatch('toggle-mobile-menu')" 
                 class="lg:hidden relative h-10 w-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-700 hover:bg-slate-200/70 transition-colors duration-200 focus:outline-none flex items-center justify-center shrink-0" 
                 aria-label="Toggle Navigation">
             <svg class="h-6 w-6 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                <path x-show="mobileOpen" x-cloak stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
     </nav>
-
-    {{-- Mobile Menu Drawer --}}
-    <x-mobile-menu :links="$navLinks" />
 </header>
+
+{{-- DILETAKKAN DI LUAR TAG HEADER --}}
+<x-mobile-menu :links="$navLinks" />
