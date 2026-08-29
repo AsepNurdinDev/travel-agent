@@ -1,62 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://img.shields.io/badge/Laravel-13-red" alt="Laravel Version">
+<img src="https://img.shields.io/badge/PHP-8.3%2B-777bb4" alt="PHP Version">
+<img src="https://img.shields.io/badge/Filament-5.7-fdae4b" alt="Filament Version">
+<img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
 </p>
 
-## About Laravel
+# Travel Agent Booking Platform
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi web pemesanan paket wisata (tour package booking) berbasis Laravel. Pengunjung dapat menjelajahi destinasi, membaca artikel blog, melihat galeri, memesan paket tur, dan melakukan pembayaran online. Admin mengelola seluruh operasional lewat panel admin Filament.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Untuk pengunjung / customer:**
+- Katalog paket tur & destinasi wisata
+- Blog & galeri
+- Registrasi dan login (termasuk **Login dengan Google** via Laravel Socialite)
+- Proses booking paket tur dengan estimasi harga otomatis
+- Pembayaran online terintegrasi **Midtrans Snap** (kartu kredit, e-wallet, VA, dll.)
+- Dashboard akun customer: riwayat booking, invoice, ulasan (review), dan pengaturan profil
 
-## Learning Laravel
+**Untuk admin (panel Filament):**
+- Manajemen paket tur, jadwal keberangkatan (availability), destinasi, hotel, kendaraan
+- Manajemen booking, invoice, dan pembayaran
+- Manajemen blog, galeri, promosi, dan inquiry/kontak
+- Role & permission (via Spatie Laravel Permission) — termasuk role `super_admin` dengan akses penuh
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Komponen | Teknologi |
+|---|---|
+| Framework | Laravel 13 |
+| Admin Panel | Filament 5 |
+| Autentikasi | Laravel Breeze + Laravel Socialite (Google OAuth) |
+| Payment Gateway | Midtrans (Snap) |
+| Roles & Permissions | Spatie Laravel Permission |
+| Frontend | Blade, Tailwind CSS 4, Alpine.js, Vite |
+| Database | MySQL |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalasi (Development)
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone project
+git clone <repo-url>
+cd <nama-folder-project>
 
-php artisan boost:install
+# 2. Install dependency PHP & JS
+composer install
+npm install
+
+# 3. Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# 4. Konfigurasi .env (lihat bagian "Environment Variables" di bawah)
+
+# 5. Migrasi & seed database
+php artisan migrate --seed
+
+# 6. Jalankan server development (server + queue + vite sekaligus)
+composer run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Aplikasi bisa diakses di `http://localhost:8000` (atau port sesuai `php artisan serve`).
 
-## Contributing
+## Environment Variables Penting
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Selain konfigurasi standar Laravel (`DB_*`, `MAIL_*`, dsb), pastikan variabel berikut terisi:
 
-## Code of Conduct
+```dotenv
+# Google OAuth (untuk fitur "Login dengan Google")
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=https://domain-kamu.com/auth/google/callback
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Midtrans (payment gateway)
+MIDTRANS_SERVER_KEY=
+MIDTRANS_CLIENT_KEY=
+MIDTRANS_IS_PRODUCTION=false
+MIDTRANS_IS_SANITIZED=true
+MIDTRANS_IS_3DS=true
+```
 
-## Security Vulnerabilities
+> ⚠️ **Server key & client key Midtrans berbeda antara mode Sandbox dan Production** — ambil dari dashboard yang sesuai (`dashboard.sandbox.midtrans.com` untuk development, `dashboard.midtrans.com` untuk production) dan jangan dicampur.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Setup Webhook Pembayaran Midtrans
+
+Agar status pembayaran otomatis ter-update (booking jadi lunas, invoice tercatat), Midtrans perlu mengirim notifikasi server-to-server ke aplikasi ini. Ini **wajib** dikonfigurasi, baik saat development (pakai tunnel) maupun production:
+
+1. Login ke dashboard Midtrans (Sandbox atau Production sesuai environment).
+2. Buka **Settings → Configuration → Payment Notification URL**.
+3. Isi dengan:
+   ```
+   https://domain-kamu.com/midtrans/notification
+   ```
+4. Route ini (`/midtrans/notification`) sudah dikecualikan dari CSRF protection di `bootstrap/app.php` karena dipanggil langsung oleh server Midtrans, bukan browser pengguna.
+5. Untuk development lokal, expose server kamu terlebih dahulu menggunakan tunnel (ngrok, Cloudflare Tunnel, dll.) agar server Midtrans bisa menjangkau endpoint tersebut.
+
+## Deploy ke Production (di belakang reverse proxy / tunnel)
+
+Jika aplikasi diakses lewat reverse proxy atau tunnel (Cloudflare Tunnel, Nginx proxy, dll.) yang meneruskan koneksi HTTPS sebagai HTTP secara internal, pastikan `trustProxies` sudah dikonfigurasi di `bootstrap/app.php` — jika tidak, Laravel akan salah mendeteksi skema URL (menghasilkan link `http://` di halaman `https://`) dan memicu error *mixed content* di browser.
+
+Set juga:
+```dotenv
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://domain-kamu.com
+```
+
+## Akses Panel Admin
+
+Panel admin Filament dapat diakses di `/admin` (sesuaikan dengan path yang dikonfigurasi). Buat user dengan role `super_admin` melalui seeder atau tinker untuk mendapatkan akses penuh ke semua fitur admin.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-
-
-https://api.asepblog.my.id/api/donations/webhook
+Project ini dibangun di atas framework [Laravel](https://laravel.com), yang merupakan open-source software berlisensi [MIT license](https://opensource.org/licenses/MIT).
