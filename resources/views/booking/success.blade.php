@@ -18,6 +18,13 @@
         </p>
     </div>
 
+    {{-- Cap paspor (animasi) --}}
+    <div class="mx-auto mt-6 flex w-fit items-center justify-center" aria-hidden="true">
+        <div class="tv-stamp flex h-28 w-28 items-center justify-center rounded-full border-4 border-double border-sun-500 text-center text-sun-500">
+            <div><p class="text-[9px] font-extrabold tracking-widest">PERJALANAN</p><p class="text-base font-extrabold leading-tight">DITERIMA</p><p class="text-[9px] font-bold">{{ now()->format('d.m.Y') }}</p></div>
+        </div>
+    </div>
+
     {{-- Booking Detail Card --}}
     <div class="mx-auto mt-10 max-w-2xl rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
         

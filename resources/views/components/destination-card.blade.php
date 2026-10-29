@@ -1,7 +1,7 @@
 @props(['destination'])
 
 <a href="{{ route('destinations.show', $destination->slug) }}" 
-   class="group relative flex h-80 w-full items-end overflow-hidden rounded-3xl bg-slate-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 focus:outline-none">
+   class="group relative flex h-80 w-full items-end overflow-hidden rounded-3xl bg-slate-900 shadow-md transition-all duration-300 hover:shadow-2xl hover:shadow-ocean-900/25 focus:outline-none" data-tilt>
     
     {{-- Destination Image --}}
     <img src="{{ $destination->image ? asset('storage/'.$destination->image) : 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80' }}"
@@ -10,20 +10,20 @@
          class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
     
     {{-- Dark Gradient Overlay --}}
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent transition-opacity duration-300 group-hover:from-slate-950/95"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/25 to-transparent transition-opacity duration-300 group-hover:from-slate-950/95"></div>
 
     {{-- Content Container --}}
     <div class="relative z-10 w-full p-6 text-white transition-transform duration-300 group-hover:-translate-y-1">
         
         {{-- Country Tag --}}
         <div class="flex items-center gap-1.5 mb-1.5">
-            <span class="text-xs font-bold uppercase tracking-widest text-emerald-300">
+            <span class="text-xs font-bold uppercase tracking-widest text-sun-300">
                 {{ $destination->country }}
             </span>
         </div>
 
         {{-- Destination Name --}}
-        <h3 class="text-2xl font-extrabold tracking-tight text-white group-hover:text-emerald-200 transition-colors duration-200">
+        <h3 class="text-2xl font-extrabold tracking-tight text-white group-hover:text-sun-300 transition-colors duration-200">
             {{ $destination->name }}
         </h3>
 
@@ -37,7 +37,7 @@
             </span>
 
             {{-- Arrow Icon --}}
-            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition duration-300 group-hover:bg-emerald-500 group-hover:text-slate-950">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition duration-300 group-hover:bg-sun-400 group-hover:text-navy">
                 <svg class="h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>

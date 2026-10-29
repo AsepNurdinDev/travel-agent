@@ -14,8 +14,8 @@
 <header x-data="{ scrolled: false }" x-init="scrolled = window.scrollY > 15;
 window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
     :class="{
-        'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-900/5 border-slate-200/80 py-2.5': scrolled,
-        'bg-white/80 backdrop-blur-md border-transparent py-4': !scrolled
+        'bg-white/90 backdrop-blur-xl shadow-lg shadow-ocean-900/10 border-ocean-100 py-2': scrolled,
+        'bg-white/75 backdrop-blur-md border-transparent py-3.5': !scrolled
     }"
     class="sticky top-0 z-40 border-b transition-all duration-300 ease-out">
 
@@ -30,14 +30,14 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
                     class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110">
             </div>
             <span
-                class="text-lg font-bold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors duration-300">
+                class="text-lg font-bold tracking-tight text-slate-900 group-hover:text-sun-500 transition-colors duration-300">
                 {{ \App\Models\Setting::getValue('site_name', 'Gaskeun') }}
             </span>
         </a>
 
         {{-- Desktop Navigation Links --}}
         <div
-            class="hidden lg:flex items-center gap-1 rounded-full bg-slate-100/80 p-1.5 border border-slate-200/60 backdrop-blur-md shadow-inner">
+            class="hidden lg:flex items-center gap-1 rounded-full bg-ocean-50/90 p-1.5 border border-ocean-100 backdrop-blur-md shadow-inner">
             @foreach ($navLinks as $key => $link)
                 @php $isActive = request()->routeIs($link['route'].'*'); @endphp
                 <a href="{{ route($link['route']) }}"
@@ -57,7 +57,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
                     <button @click="open = !open" @click.outside="open = false"
                         class="flex items-center gap-2.5 rounded-full border border-slate-200/80 bg-white/80 p-1 pr-3 text-xs font-semibold text-slate-800 shadow-sm transition-all duration-300 hover:border-emerald-500/40 hover:shadow-md hover:bg-white focus:outline-none">
                         <span
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold shadow-sm">
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-sun-400 text-navy font-extrabold shadow-sm">
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </span>
                         <span class="max-w-[100px] truncate">{{ Str::of(auth()->user()->name)->before(' ') }}</span>
@@ -115,7 +115,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
                     Masuk
                 </a>
                 <a href="{{ route('register') }}"
-                    class="rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-2 text-xs font-semibold text-white shadow-md shadow-emerald-500/20 hover:from-emerald-500 hover:to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-300">
+                    class="rounded-full bg-sun-400 px-5 py-2 text-xs font-extrabold text-navy shadow-lg shadow-sun-500/30 hover:bg-sun-300 hover:-translate-y-0.5 transition-all duration-300">
                     Daftar
                 </a>
             @endauth
