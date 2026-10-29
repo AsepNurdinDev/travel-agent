@@ -12,11 +12,11 @@
         @if ($booking->addons_total > 0)
             <div class="flex justify-between"><span class="text-muted">Add-ons</span><span>Rp {{ number_format($booking->addons_total, 0, ',', '.') }}</span></div>
         @endif
-        <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-muted">Subtotal</span><span>Rp {{ number_format($booking->subtotal, 0, ',', '.') }}</span></div>
+        <div class="flex justify-between border-t border-ocean-100 pt-2"><span class="text-muted">Subtotal</span><span>Rp {{ number_format($booking->subtotal, 0, ',', '.') }}</span></div>
         @if ($booking->discount_amount > 0)
             <div class="flex justify-between text-emerald-600"><span>Discount{{ $booking->promotion ? ' ('.$booking->promotion->code.')' : '' }}</span><span>- Rp {{ number_format($booking->discount_amount, 0, ',', '.') }}</span></div>
         @endif
-        <div class="flex justify-between border-t border-slate-100 pt-3 text-base font-bold text-ink">
+        <div class="flex justify-between border-t border-ocean-100 pt-3 text-base font-bold text-ink">
             <span>Total</span><span>Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
         </div>
         <div class="flex justify-between text-emerald-600"><span>Sudah Dibayar</span><span>Rp {{ number_format($booking->amount_paid, 0, ',', '.') }}</span></div>

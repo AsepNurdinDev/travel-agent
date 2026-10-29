@@ -1,7 +1,7 @@
 @props(['invoice'])
 
 <a href="{{ route('account.invoices.show', $invoice) }}" 
-   class="group block rounded-2xl border border-slate-100 bg-white p-4.5 sm:p-5 shadow-sm transition-all duration-200 hover:border-slate-200 hover:shadow-md">
+   class="group block rounded-3xl border border-ocean-100 bg-white p-4.5 sm:p-5 shadow-sm transition-all duration-200 hover:border-slate-200 hover:shadow-md">
     <div class="flex items-center justify-between gap-4">
         
         {{-- Left Info Section --}}

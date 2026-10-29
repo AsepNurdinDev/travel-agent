@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Account\BookingController as AccountBookingController;
 use App\Http\Controllers\Account\DashboardController as AccountDashboardController;
 use App\Http\Controllers\Account\InvoiceController;
 use App\Http\Controllers\Account\ProfileController as AccountProfileController;
 use App\Http\Controllers\Account\ReviewController;
-use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\TourPackageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MidtransWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +47,6 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 // Midtrans Webhook (dipanggil server Midtrans, bukan user — tanpa auth middleware)
 Route::post('/midtrans/notification', MidtransWebhookController::class)->name('midtrans.notification');
 
-
 /*
 |--------------------------------------------------------------------------
 | Authenticated Routes
@@ -64,7 +63,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route yang WAJIB Login DAN Terverifikasi Email (auth + verified)
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Booking Process
     Route::get('/booking/{availability}/create', [BookingController::class, 'create'])->name('booking.create');
@@ -100,7 +99,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Profile
             Route::get('/profile', [AccountProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/edit', [AccountProfileController::class, 'edit'])->name('profile.edit');
-            
+
             // DUKUNG METHOD PUT DAN PATCH AGAR FORM PROFILE TIDAK ERROR 405
             Route::match(['put', 'patch'], '/profile', [AccountProfileController::class, 'update'])->name('profile.update');
 

@@ -12,10 +12,10 @@
         @endif
 
         {{-- Main Form Card --}}
-        <div class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm space-y-6">
             
             {{-- Header Section --}}
-            <div class="border-b border-slate-100 pb-5">
+            <div class="border-b border-ocean-100 pb-5">
                 <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Ubah Kata Sandi</h1>
                 <p class="text-xs sm:text-sm text-slate-500 mt-1">Gunakan kata sandi yang kuat dan belum pernah Anda gunakan untuk akun lain.</p>
             </div>
@@ -104,9 +104,9 @@
                 </div>
 
                 {{-- Submit Button --}}
-                <div class="pt-4 border-t border-slate-100 flex items-center justify-end">
+                <div class="pt-4 border-t border-ocean-100 flex items-center justify-end">
                     <button type="submit" 
-                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 active:scale-[0.99] transition">
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-xs font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 active:scale-[0.99] transition">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>

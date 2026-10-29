@@ -7,7 +7,7 @@
         </div>
 
         {{-- Form Section --}}
-        <div class="mt-8 bg-white py-8 px-6 shadow-xl shadow-slate-100 rounded-2xl border border-slate-100 sm:px-8">
+        <div class="mt-8 bg-white py-8 px-6 shadow-xl shadow-ocean-900/10 rounded-2xl border border-ocean-100 sm:px-8">
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <form method="POST" action="{{ route('login') }}" class="space-y-5" x-data="{ showPassword: false }">
@@ -64,13 +64,13 @@
                 </div>
 
                 {{-- Submit Button --}}
-                <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3.5 px-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-500 hover:to-teal-500 hover:shadow-emerald-500/35 active:scale-[0.99] transition duration-200">
+                <button type="submit" class="w-full rounded-xl bg-sun-400 py-3.5 px-4 text-sm font-bold text-navy font-extrabold shadow-lg shadow-sun-500/30 hover:bg-sun-300 hover:shadow-sun-500/30 active:scale-[0.99] transition duration-200">
                     Masuk Akun
                 </button>
             </form>
 
             {{-- Register link --}}
-            <div class="mt-6 border-t border-slate-100 pt-6 text-center">
+            <div class="mt-6 border-t border-ocean-100 pt-6 text-center">
                 <p class="text-xs text-slate-500">
                     Belum punya akun? 
                     <a href="{{ route('register') }}" class="font-bold text-emerald-600 hover:text-emerald-700 transition">

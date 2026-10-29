@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -5,25 +6,46 @@
 @source '../../resources/views/**/*.blade.php';
 
 @theme {
-    --font-sans: 'Noto Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    /* ===== Tema Travel: Ocean & Sunset ===== */
+    --color-navy: #0B2545;
+    --color-ocean-50: #F0FAFC;
+    --color-ocean-100: #DDF3F8;
+    --color-ocean-500: #14A3C7;
+    --color-ocean-600: #0E7490;
+    --color-ocean-700: #0A5C73;
+    --color-ocean-900: #0B2545;
+    --color-sun-300: #FFB27A;
+    --color-sun-400: #FF8A3D;
+    --color-sun-500: #F26D1B;
 
-    --color-primary: #0F766E;
-    --color-primary-dark: #115E59;
-    --color-primary-50: #F0FDFA;
-    --color-primary-100: #CCFBF1;
-    --color-primary-200: #99F6E4;
-    --color-primary-600: #0D9488;
-    --color-primary-700: #0F766E;
-    --color-primary-800: #115E59;
+    /* Override emerald/teal agar seluruh halaman lama otomatis jadi biru laut */
+    --color-emerald-50: #F0FAFC; --color-emerald-100: #DDF3F8; --color-emerald-200: #B5E4EE;
+    --color-emerald-300: #7FD0E2; --color-emerald-400: #3DB8D4; --color-emerald-500: #14A3C7;
+    --color-emerald-600: #0E7490; --color-emerald-700: #0A5C73; --color-emerald-800: #0B4A5E;
+    --color-emerald-900: #0B3A4D; --color-emerald-950: #082A3A;
+    --color-teal-50: #F0FAFC; --color-teal-100: #DDF3F8; --color-teal-500: #14A3C7;
+    --color-teal-600: #0E7490; --color-teal-700: #0A5C73; --color-teal-800: #0B4A5E;
+    --color-slate-900: #0B2545; --color-slate-950: #07142B;
 
-    --color-accent: #F59E0B;
-    --color-accent-dark: #B45309;
-    --color-accent-light: #FEF3C7;
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+    --font-display: 'Fraunces', Georgia, serif;
+
+    --color-primary: #0E7490;
+    --color-primary-dark: #0A5C73;
+    --color-primary-50: #F0FAFC;
+    --color-primary-100: #DDF3F8;
+    --color-primary-200: #B5E4EE;
+    --color-primary-600: #0E7490;
+    --color-primary-700: #0A5C73;
+    --color-primary-800: #0B4A5E;
+
+    --color-accent: #FF8A3D;
+    --color-accent-dark: #F26D1B;
+    --color-accent-light: #FFE8D6;
 
     --color-surface: #F8FAFC;
-    --color-ink: #0F172A;
+    --color-ink: #0B2545;
     --color-muted: #64748B;
 
     --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
@@ -48,8 +70,8 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        border-radius: 0.375rem;
-        padding: 0.625rem 1.25rem;
+        border-radius: 9999px;
+        padding: 0.7rem 1.4rem;
         font-size: 0.875rem;
         line-height: 1.25rem;
         font-weight: 600;
@@ -81,7 +103,9 @@
 
     .btn-accent {
         background-color: var(--color-accent);
-        color: white;
+        color: var(--color-navy);
+        font-weight: 800;
+        box-shadow: 0 12px 24px -10px rgba(242, 109, 27, 0.55);
     }
 
     .btn-accent:hover {
@@ -109,7 +133,7 @@
     }
 
     .card {
-        border-radius: 0.75rem;
+        border-radius: 1.25rem;
         border: 1px solid #f1f5f9;
         background-color: white;
         box-shadow: var(--shadow-card);
@@ -118,7 +142,7 @@
     .input {
         display: block;
         width: 100%;
-        border-radius: 0.375rem;
+        border-radius: 0.875rem;
         border: 1px solid #cbd5e1;
         color: var(--color-ink);
         box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -202,4 +226,40 @@
     .btn, .btn-primary, .btn-accent, .btn-outline { min-height: 2.75rem; }
     .card { border-radius: 0.625rem; }
     input, select, textarea { font-size: 16px; }
+}
+
+
+/* =====================================================
+   ANIMASI TEMA TRAVEL
+   ===================================================== */
+.js .reveal { opacity: 0; transform: translateY(28px);
+    transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.js .reveal.show { opacity: 1; transform: none; }
+[data-tilt] { transition: transform .2s ease-out, box-shadow .3s; will-change: transform; }
+
+@keyframes tv-fly { 0% { transform: translate(-25vw, 30px) rotate(6deg); } 50% { transform: translate(50vw, -20px) rotate(-3deg); } 100% { transform: translate(125vw, 10px) rotate(4deg); } }
+@keyframes tv-drift { from { transform: translateX(-12vw); } to { transform: translateX(112vw); } }
+@keyframes tv-wave { to { transform: translateX(-50%); } }
+@keyframes tv-bob { 50% { transform: translateY(-14px) rotate(3deg); } }
+@keyframes tv-pin { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-16px); } 60% { transform: translateY(0); } }
+@keyframes tv-spin { to { transform: rotate(360deg); } }
+@keyframes tv-dash { to { stroke-dashoffset: -60; } }
+@keyframes tv-stamp { 0% { transform: scale(3) rotate(-30deg); opacity: 0; } 70% { transform: scale(.9) rotate(-12deg); opacity: 1; } 100% { transform: scale(1) rotate(-12deg); opacity: 1; } }
+@keyframes tv-glow { 0%, 100% { opacity: .5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.12); } }
+
+.tv-fly { animation: tv-fly 16s linear infinite; }
+.tv-drift { animation: tv-drift 70s linear infinite; }
+.tv-wave { animation: tv-wave 12s linear infinite; width: 200%; }
+.tv-wave-slow { animation-duration: 22s; animation-direction: reverse; }
+.tv-bob { animation: tv-bob 6s ease-in-out infinite; }
+.tv-pin { animation: tv-pin 2s ease-in-out infinite; }
+.tv-spin { animation: tv-spin 24s linear infinite; }
+.tv-dash { stroke-dasharray: 8 8; animation: tv-dash 2s linear infinite; }
+.tv-stamp { animation: tv-stamp .7s .3s cubic-bezier(.2,.8,.2,1) both; }
+.tv-glow { animation: tv-glow 3s ease-in-out infinite; }
+.font-display { font-family: var(--font-display); }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
 }

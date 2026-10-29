@@ -34,7 +34,7 @@
                        autofocus 
                        autocomplete="username" 
                        placeholder="nama@email.com"
-                       class="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('email') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
+                       class="w-full rounded-xl border border-slate-200 bg-ocean-50/60 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('email') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
             </div>
             @error('email')
                 <p class="mt-1.5 text-xs text-rose-600 font-medium flex items-center gap-1">
@@ -61,7 +61,7 @@
                        required 
                        autocomplete="new-password" 
                        placeholder="••••••••"
-                       class="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('password') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
+                       class="w-full rounded-xl border border-slate-200 bg-ocean-50/60 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('password') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
                 
                 {{-- Show/Hide Toggle --}}
                 <button type="button" @click="showPass = !showPass" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600 focus:outline-none">
@@ -100,7 +100,7 @@
                        required 
                        autocomplete="new-password" 
                        placeholder="••••••••"
-                       class="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('password_confirmation') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
+                       class="w-full rounded-xl border border-slate-200 bg-ocean-50/60 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 @error('password_confirmation') border-rose-300 bg-rose-50/30 text-rose-900 focus:border-rose-500 focus:ring-rose-500/20 @enderror">
                 
                 {{-- Show/Hide Toggle --}}
                 <button type="button" @click="showConfirmPass = !showConfirmPass" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600 focus:outline-none">
@@ -126,7 +126,7 @@
 
         {{-- Submit Button --}}
         <button type="submit" 
-                class="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-2.5 px-4 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-500/20 hover:from-emerald-500 hover:to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 mt-2">
+                class="w-full rounded-xl bg-sun-400 py-2.5 px-4 text-xs sm:text-sm font-semibold text-navy font-extrabold shadow-md shadow-sun-500/30 hover:bg-sun-300 hover:shadow-lg hover:shadow-sun-500/30 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 mt-2">
             <span>Simpan Kata Sandi Baru</span>
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />

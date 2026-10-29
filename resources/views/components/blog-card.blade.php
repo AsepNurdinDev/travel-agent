@@ -1,7 +1,7 @@
 @props(['post'])
 
 <a href="{{ route('blog.show', $post->slug) }}" 
-   class="group flex flex-col h-full overflow-hidden rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+   class="group flex flex-col h-full overflow-hidden rounded-2xl bg-white border border-ocean-100 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
     
     {{-- Image Container --}}
     <div class="aspect-[16/10] w-full overflow-hidden bg-slate-100 relative">
@@ -33,7 +33,7 @@
         </div>
 
         {{-- Footer Meta & Arrow --}}
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-medium text-slate-400">
+        <div class="mt-6 pt-4 border-t border-ocean-100 flex items-center justify-between text-xs font-medium text-slate-400">
             <div class="flex items-center gap-1.5">
                 <svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>

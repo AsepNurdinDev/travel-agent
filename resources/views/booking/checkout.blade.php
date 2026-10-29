@@ -67,6 +67,15 @@
      }">
     <div class="mx-auto max-w-5xl">
 
+        {{-- Banner perjalanan --}}
+        <div class="relative mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-r from-ocean-600 via-ocean-500 to-ocean-700 p-6 text-white shadow-xl shadow-ocean-900/20 sm:p-8">
+            <x-sky />
+            <div class="relative z-10">
+                <p class="text-xs font-bold uppercase tracking-[.2em] text-sun-300">Selesaikan pembayaran</p>
+                <h2 class="font-display mt-1 text-2xl font-extrabold sm:text-3xl">{{ $booking->tourPackage->name }}</h2>
+            </div>
+        </div>
+
         {{-- Breadcrumb Steps --}}
         <div class="mb-8 flex items-center gap-2.5 text-xs font-semibold">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 border border-emerald-200/60">
@@ -89,8 +98,8 @@
             <div class="lg:col-span-3 space-y-6">
 
                 {{-- Tour & Booking Info Summary Card --}}
-                <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-                    <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+                <div class="rounded-3xl border border-ocean-100 bg-white p-6 shadow-sm">
+                    <div class="flex items-start justify-between gap-4 border-b border-ocean-100 pb-4">
                         <div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">Paket Wisata</span>
                             <h2 class="text-lg font-bold text-slate-900 mt-0.5">{{ $booking->tourPackage->name }}</h2>
@@ -100,11 +109,11 @@
                     </div>
 
                     <div class="mt-4 grid grid-cols-2 gap-4 text-xs">
-                        <div class="rounded-2xl bg-slate-50 p-3 border border-slate-100">
+                        <div class="rounded-2xl bg-ocean-50 p-3 border border-ocean-100">
                             <p class="text-slate-400 font-medium">Tanggal Keberangkatan</p>
                             <p class="font-bold text-slate-900 mt-0.5 text-sm">{{ $booking->availability->departure_date->format('d M Y') }}</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-3 border border-slate-100">
+                        <div class="rounded-2xl bg-ocean-50 p-3 border border-ocean-100">
                             <p class="text-slate-400 font-medium">Jumlah Peserta</p>
                             <p class="font-bold text-slate-900 mt-0.5 text-sm">
                                 {{ $booking->adult_count }} Dewasa
@@ -116,12 +125,12 @@
                 </div>
 
                 {{-- Payment Options Card --}}
-                <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-                    <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Pilih Nominal Pembayaran</h3>
+                <div class="rounded-3xl border border-ocean-100 bg-white p-6 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 border-b border-ocean-100 pb-3">Pilih Nominal Pembayaran</h3>
 
                     <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
-                               :class="paymentType === 'deposit' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
+                               :class="paymentType === 'deposit' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-ocean-100 hover:border-slate-300'">
                             <input type="radio" x-model="paymentType" value="deposit" class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between">
@@ -134,7 +143,7 @@
                         </label>
 
                         <label class="relative flex flex-col justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
-                               :class="paymentType === 'full' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
+                               :class="paymentType === 'full' ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-ocean-100 hover:border-slate-300'">
                             <input type="radio" x-model="paymentType" value="full" class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between">

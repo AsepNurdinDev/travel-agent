@@ -82,7 +82,7 @@
                     <x-destination-card :destination="$destination" />
                 </div>
             @empty
-                <div class="col-span-full py-12 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                <div class="col-span-full py-12 text-center bg-ocean-50 rounded-2xl border border-dashed border-slate-200">
                     <p class="text-slate-500 text-sm">Belum ada destinasi yang ditampilkan saat ini.</p>
                 </div>
             @endforelse
@@ -90,7 +90,7 @@
     </section>
 
     {{-- Popular Paket Wisata --}}
-    <section class="bg-slate-50 py-16 sm:py-24 border-y border-slate-200/70">
+    <section class="bg-ocean-50 py-16 sm:py-24 border-y border-slate-200/70">
         <div class="container-page">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
                 <div>
@@ -216,7 +216,7 @@
 
     {{-- Galeri Preview (Bento Layout) --}}
     @if ($galleryPreview->isNotEmpty())
-    <section class="bg-slate-50 py-16 sm:py-24 border-y border-slate-200/70">
+    <section class="bg-ocean-50 py-16 sm:py-24 border-y border-slate-200/70">
         <div class="container-page">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
                 <div>

@@ -30,7 +30,7 @@
         
         <div>
             {{-- Header Menu Drawer --}}
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div class="flex items-center justify-between border-b border-ocean-100 pb-4">
                 <span class="text-base font-bold text-slate-900">Navigasi Utama</span>
                 <button @click="open = false" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors" aria-label="Close menu">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -44,7 +44,7 @@
                 @foreach ($links as $link)
                     @php $isActive = request()->routeIs($link['route'].'*'); @endphp
                     <a href="{{ route($link['route']) }}" 
-                       class="rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors {{ $isActive ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900' }}">
+                       class="rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors {{ $isActive ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700 hover:bg-ocean-50 hover:text-slate-900' }}">
                         {{ $link['label'] }}
                     </a>
                 @endforeach
@@ -52,7 +52,7 @@
         </div>
 
         {{-- Footer Drawer / Auth Links --}}
-        <div class="flex flex-col gap-2.5 border-t border-slate-100 pt-5">
+        <div class="flex flex-col gap-2.5 border-t border-ocean-100 pt-5">
             @auth
                 <div class="flex items-center gap-3 px-1 mb-2">
                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-xs shrink-0">
@@ -63,7 +63,7 @@
                         <p class="text-[11px] text-slate-400 truncate">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
-                <a href="{{ route('account.dashboard') }}" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-center text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
+                <a href="{{ route('account.dashboard') }}" class="w-full rounded-xl border border-slate-200 bg-ocean-50 py-2.5 text-center text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
                     Dashboard
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
@@ -73,10 +73,10 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-center text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors">
+                <a href="{{ route('login') }}" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-center text-xs font-semibold text-slate-700 shadow-sm hover:bg-ocean-50 transition-colors">
                     Masuk
                 </a>
-                <a href="{{ route('register') }}" class="w-full rounded-xl bg-emerald-600 py-2.5 text-center text-xs font-semibold text-white shadow-md shadow-emerald-500/20 hover:bg-emerald-500 transition-all">
+                <a href="{{ route('register') }}" class="w-full rounded-xl bg-sun-400 py-2.5 text-center text-xs font-semibold text-navy font-extrabold shadow-md shadow-sun-500/30 hover:bg-sun-300 transition-all">
                     Daftar
                 </a>
             @endauth

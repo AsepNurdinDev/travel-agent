@@ -23,6 +23,7 @@
                 {{ $destination->city }}, {{ $destination->country }}
             </p>
         </div>
+        <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0 z-[5]" />
     </section>
 
     {{-- Content Details & Sidebar Section --}}
@@ -40,7 +41,7 @@
 
             {{-- Gallery Grid --}}
             @if ($destination->galleries && $destination->galleries->isNotEmpty())
-                <div class="pt-6 border-t border-slate-200/60">
+                <div class="pt-6 border-t border-ocean-100">
                     <h3 class="text-xl font-bold text-slate-900 mb-4">Galeri Dokumentasi</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                         @foreach ($destination->galleries as $image)
@@ -62,8 +63,8 @@
 
         {{-- Right Column: Quick Facts Card --}}
         <div>
-            <div class="sticky top-6 rounded-3xl bg-white p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-100">
-                <div class="flex items-center gap-3 pb-5 border-b border-slate-100">
+            <div class="sticky top-6 rounded-3xl bg-white p-6 sm:p-8 border border-ocean-100 shadow-xl shadow-ocean-900/10">
+                <div class="flex items-center gap-3 pb-5 border-b border-ocean-100">
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -80,11 +81,11 @@
                         <dt class="text-slate-500 font-medium">Negara</dt>
                         <dd class="font-semibold text-slate-900">{{ $destination->country }}</dd>
                     </div>
-                    <div class="flex items-center justify-between py-1 border-t border-slate-100">
+                    <div class="flex items-center justify-between py-1 border-t border-ocean-100">
                         <dt class="text-slate-500 font-medium">Kota / Wilayah</dt>
                         <dd class="font-semibold text-slate-900">{{ $destination->city }}</dd>
                     </div>
-                    <div class="flex items-center justify-between py-1 border-t border-slate-100">
+                    <div class="flex items-center justify-between py-1 border-t border-ocean-100">
                         <dt class="text-slate-500 font-medium">Paket Wisata Tersedia</dt>
                         <dd class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700">
                             {{ $tours->total() }} Paket
@@ -96,7 +97,7 @@
     </section>
 
     {{-- Tours Section --}}
-    <section class="bg-slate-50 border-t border-slate-200/60 py-12 sm:py-16">
+    <section class="bg-ocean-50 border-t border-ocean-100 py-12 sm:py-16">
         <div class="container-page">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
                 <div>

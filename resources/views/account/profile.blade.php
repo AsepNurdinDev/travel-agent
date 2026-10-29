@@ -57,8 +57,8 @@
             @method('PATCH')
 
             <!-- Section 1: Informasi Kontak -->
-            <div class="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5">
-                <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+            <div class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5">
+                <div class="flex items-center gap-3 pb-4 border-b border-ocean-100">
                     <div class="p-2.5 rounded-xl bg-emerald-50 text-emerald-600">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -133,8 +133,8 @@
             </div>
 
             <!-- Section 2: Data Verifikasi & Alamat -->
-            <div class="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5">
-                <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+            <div class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5">
+                <div class="flex items-center gap-3 pb-4 border-b border-ocean-100">
                     <div class="p-2.5 rounded-xl bg-teal-50 text-teal-600">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h2a2 2 0 012 2v1m-6 0h6" />
@@ -210,7 +210,7 @@
             {{-- Submit Action Bar --}}
             <div class="flex items-center justify-end gap-3 pt-2">
                 <button type="submit" 
-                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-lg shadow-emerald-600/25 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.98] transition-all duration-150">
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-8 py-3.5 text-xs sm:text-sm font-extrabold text-navy font-extrabold shadow-lg shadow-sun-500/30 hover:bg-sun-300 active:scale-[0.98] transition-all duration-150">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                     </svg>

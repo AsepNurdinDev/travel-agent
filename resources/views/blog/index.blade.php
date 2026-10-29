@@ -1,20 +1,22 @@
 <x-app-layout title="Blog Perjalanan">
     {{-- Header Section --}}
-    <section class="border-b border-slate-200/60 bg-gradient-to-b from-slate-50 to-white py-12 sm:py-16">
-        <div class="container-page">
-            <span class="text-xs font-bold tracking-widest text-emerald-600 uppercase">Jurnal & Panduan Wisata</span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight">Blog Perjalanan</h1>
-            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl font-light">
+    <section class="relative overflow-hidden bg-gradient-to-b from-ocean-600 via-ocean-500 to-ocean-100 pb-28 pt-14 sm:pb-32 sm:pt-20">
+        <x-sky />
+        <div class="container-page relative z-10">
+            <span class="text-xs font-bold tracking-widest text-sun-300 uppercase">Jurnal & Panduan Wisata</span>
+            <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white mt-2 tracking-tight">Blog Perjalanan</h1>
+            <p class="mt-3 text-base sm:text-lg text-white/90 max-w-2xl font-medium">
                 Temukan inspirasi, tips liburan, dan panduan lengkap dari para penjelajah untuk petualangan Anda berikutnya.
             </p>
         </div>
+        <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0" />
     </section>
 
     {{-- Featured Post --}}
     @if ($featuredPost)
     <section class="container-page py-10">
         <a href="{{ route('blog.show', $featuredPost->slug) }}" 
-           class="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-3xl bg-white border border-slate-100 shadow-xl shadow-slate-100 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10">
+           class="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-3xl bg-white border border-ocean-100 shadow-xl shadow-ocean-900/10 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10">
             
             {{-- Image Container --}}
             <div class="lg:col-span-7 aspect-[16/10] lg:aspect-auto overflow-hidden bg-slate-100 relative">
@@ -47,7 +49,7 @@
                     </p>
                 </div>
 
-                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-xs font-medium text-slate-400">
+                <div class="mt-8 pt-6 border-t border-ocean-100 flex items-center justify-between text-xs font-medium text-slate-400">
                     <div class="flex items-center gap-2">
                         <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -78,7 +80,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         @foreach ($posts as $post)
                             <div class="transition-transform duration-300 hover:-translate-y-1">
-                                <x-blog-card :post="$post" />
+                                <div data-reveal class="h-full [&>*]:h-full"><x-blog-card :post="$post" /></div>
                             </div>
                         @endforeach
                     </div>
@@ -94,7 +96,7 @@
             <aside class="space-y-8">
                 
                 {{-- Search Widget --}}
-                <div class="rounded-2xl bg-white p-6 border border-slate-100 shadow-sm">
+                <div class="rounded-3xl bg-white p-6 border border-ocean-100 shadow-sm">
                     <h3 class="font-bold text-slate-900 text-sm tracking-wide uppercase">Cari Artikel</h3>
                     <form action="{{ route('blog.index') }}" method="GET" class="mt-4">
                         <div class="relative rounded-xl shadow-sm">
@@ -111,12 +113,12 @@
                 </div>
 
                 {{-- Categories Widget --}}
-                <div class="rounded-2xl bg-white p-6 border border-slate-100 shadow-sm">
+                <div class="rounded-3xl bg-white p-6 border border-ocean-100 shadow-sm">
                     <h3 class="font-bold text-slate-900 text-sm tracking-wide uppercase">Kategori</h3>
                     <ul class="mt-4 space-y-1">
                         <li>
                             <a href="{{ route('blog.index') }}" 
-                               class="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 {{ ! request('category') ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                               class="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 {{ ! request('category') ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-ocean-50 hover:text-slate-900' }}">
                                 <span>Semua Artikel</span>
                                 <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600 font-semibold">{{ $posts->total() }}</span>
                             </a>
@@ -125,7 +127,7 @@
                             @php $isCatActive = request('category') == $category->id; @endphp
                             <li>
                                 <a href="{{ route('blog.index', ['category' => $category->id]) }}"
-                                   class="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 {{ $isCatActive ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                                   class="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 {{ $isCatActive ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-ocean-50 hover:text-slate-900' }}">
                                     <span>{{ $category->name }}</span>
                                     <span class="rounded-full {{ $isCatActive ? 'bg-emerald-200/60 text-emerald-800' : 'bg-slate-100 text-slate-500' }} px-2.5 py-0.5 text-xs font-semibold">
                                         {{ $category->posts_count }}

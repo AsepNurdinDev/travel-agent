@@ -13,29 +13,33 @@
 </head>
 <body class="font-sans text-ink antialiased">
     <div class="grid min-h-screen lg:grid-cols-2">
-        <div class="relative hidden lg:flex flex-col justify-between overflow-hidden bg-primary p-12 text-white">
-            <a href="{{ route('home') }}" class="relative z-10 flex items-center gap-2">
-                <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 font-bold">N</span>
-                <span class="text-lg font-bold">{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</span>
+        {{-- Panel kiri: pemandangan langit --}}
+        <div class="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-b from-ocean-600 via-ocean-500 to-sky-200 p-12 text-white lg:flex">
+            <x-sky />
+            <a href="{{ route('home') }}" class="relative z-10 flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 p-1.5 shadow-lg"><img src="{{ asset('img/logo.png') }}" alt="" class="h-full w-full object-contain"></span>
+                <span class="text-xl font-extrabold">{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</span>
             </a>
 
-            <div class="relative z-10 max-w-md">
-                <p class="text-sm font-semibold uppercase tracking-wider text-primary-100">Trusted by 12,000+ orang</p>
-                <h2 class="mt-3 text-3xl font-bold leading-snug">Perjalanan Anda berikutnya di Indonesia dimulai dari sini.</h2>
-                <p class="mt-4 text-primary-100">Curated destinations, transparent pricing, and a support team that's with you from booking to landing.</p>
+            <div class="relative z-10 max-w-md pb-24">
+                <p class="text-sm font-bold uppercase tracking-[.2em] text-sun-300">Dipercaya 12.000+ traveler</p>
+                <h2 class="font-display mt-3 text-4xl font-extrabold leading-tight">Perjalanan Anda berikutnya di Indonesia dimulai dari sini.</h2>
+                <p class="mt-4 text-white/90">Destinasi pilihan, harga transparan, dan tim yang menemani dari pemesanan hingga mendarat.</p>
             </div>
 
-            <p class="relative z-10 text-xs text-primary-100">&copy; {{ now()->year }} {{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</p>
-
-            <div class="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-white/10"></div>
-            <div class="absolute -top-16 -left-10 h-64 w-64 rounded-full bg-white/10"></div>
+            <span class="tv-bob absolute bottom-28 right-12 z-10 text-5xl" aria-hidden="true">🎈</span>
+            <span class="tv-bob absolute bottom-24 left-1/2 z-10 text-4xl" style="animation-delay:-3s" aria-hidden="true">⛵</span>
+            <x-wave color="#ffffff" class="absolute inset-x-0 bottom-0 opacity-60" slow />
+            <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0" />
+            <p class="relative z-10 text-xs text-white/80">&copy; {{ now()->year }} {{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</p>
         </div>
 
-        <div class="flex items-center justify-center p-6 sm:p-12">
+        {{-- Panel kanan: form --}}
+        <div class="flex items-center justify-center bg-surface p-6 sm:p-12">
             <div class="w-full max-w-sm">
-                <a href="{{ route('home') }}" class="mb-8 flex items-center gap-2 lg:hidden">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-bold">N</span>
-                    <span class="text-lg font-bold text-ink">{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</span>
+                <a href="{{ route('home') }}" class="mb-8 flex items-center gap-3 lg:hidden">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-ocean-50 p-1.5"><img src="{{ asset('img/logo.png') }}" alt="" class="h-full w-full object-contain"></span>
+                    <span class="text-lg font-extrabold text-ink">{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}</span>
                 </a>
 
                 {{ $slot }}

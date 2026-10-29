@@ -2,28 +2,30 @@
 <div x-data="{ lightboxOpen: false, activeImage: null, activeCaption: '' }">
     
     {{-- Header & Filter Section --}}
-    <section class="border-b border-slate-200/60 bg-gradient-to-b from-slate-50 to-white py-12 sm:py-16">
-        <div class="container-page">
-            <span class="text-xs font-bold tracking-widest text-emerald-600 uppercase">Momen Indah Perjalanan</span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight">Galeri Foto</h1>
-            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl font-light">
+    <section class="relative overflow-hidden bg-gradient-to-b from-ocean-600 via-ocean-500 to-ocean-100 pb-28 pt-14 sm:pb-32 sm:pt-20">
+        <x-sky />
+        <div class="container-page relative z-10">
+            <span class="text-xs font-bold tracking-widest text-sun-300 uppercase">Momen Indah Perjalanan</span>
+            <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white mt-2 tracking-tight">Galeri Foto</h1>
+            <p class="mt-3 text-base sm:text-lg text-white/90 max-w-2xl font-medium">
                 Kumpulan dokumentasi keindahan alam dan momen berharga peserta tour bersama Nusantara Journeys.
             </p>
 
             {{-- Filter Destination Pills --}}
             <form action="{{ route('gallery.index') }}" method="GET" class="mt-8 flex flex-wrap items-center gap-2">
                 <a href="{{ route('gallery.index') }}" 
-                   class="rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 {{ ! request('destination') ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600' }}">
+                   class="rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 {{ ! request('destination') ? 'bg-sun-400 text-navy font-extrabold shadow-md shadow-sun-500/30' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600' }}">
                     Semua Foto
                 </a>
                 @foreach ($destinations as $d)
                     <a href="{{ route('gallery.index', ['destination' => $d->id]) }}"
-                       class="rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 {{ request('destination') == $d->id ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600' }}">
+                       class="rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 {{ request('destination') == $d->id ? 'bg-sun-400 text-navy font-extrabold shadow-md shadow-sun-500/30' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600' }}">
                         {{ $d->name }}
                     </a>
                 @endforeach
             </form>
         </div>
+        <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0" />
     </section>
 
     {{-- Gallery Grid Section --}}

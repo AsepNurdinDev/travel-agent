@@ -65,7 +65,7 @@
         @endif
 
         {{-- Card Footer: Price & CTA --}}
-        <div class="mt-auto pt-5 flex items-end justify-between border-t border-slate-100">
+        <div class="mt-auto pt-5 flex items-end justify-between border-t border-ocean-100">
             <div>
                 <span class="block text-[11px] font-medium text-slate-400 uppercase tracking-wide">Mulai Dari</span>
                 <p class="text-lg font-extrabold text-ocean-700">

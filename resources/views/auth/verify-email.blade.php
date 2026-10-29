@@ -1,5 +1,5 @@
 <x-guest-layout title="Verifikasi Email">
-    <div class="mx-auto w-full max-w-md rounded-2xl bg-white p-8 shadow-xl shadow-slate-100/60 border border-slate-100 text-center">
+    <div class="mx-auto w-full max-w-md rounded-3xl bg-white p-8 shadow-xl shadow-slate-100/60 border border-ocean-100 text-center">
         <!-- Icon Badge with Soft Glow -->
         <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary ring-8 ring-primary-50/50 transition-transform hover:scale-105">
             <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">

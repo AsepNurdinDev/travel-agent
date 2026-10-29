@@ -1,7 +1,7 @@
 @props(['booking'])
 
 <a href="{{ route('account.bookings.show', $booking) }}" 
-   class="group relative flex flex-col sm:flex-row gap-5 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-200">
+   class="group relative flex flex-col sm:flex-row gap-5 rounded-3xl border border-ocean-100 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-200">
     
     {{-- Cover Image --}}
     <div class="relative h-40 sm:h-auto sm:w-44 shrink-0 overflow-hidden rounded-2xl bg-slate-100">
@@ -34,21 +34,21 @@
 
             {{-- Summary Chips --}}
             <div class="mt-3.5 grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                <div class="rounded-xl bg-slate-50 p-2.5 border border-slate-100/80">
+                <div class="rounded-xl bg-ocean-50 p-2.5 border border-slate-100/80">
                     <p class="text-[11px] text-slate-400 font-medium">Berangkat</p>
                     <p class="font-bold text-slate-800 mt-0.5 truncate">
                         {{ optional($booking->availability)->departure_date?->format('d M Y') ?? '-' }}
                     </p>
                 </div>
 
-                <div class="rounded-xl bg-slate-50 p-2.5 border border-slate-100/80">
+                <div class="rounded-xl bg-ocean-50 p-2.5 border border-slate-100/80">
                     <p class="text-[11px] text-slate-400 font-medium">Peserta</p>
                     <p class="font-bold text-slate-800 mt-0.5 truncate">
                         {{ $booking->adult_count + $booking->child_count + $booking->infant_count }} Orang
                     </p>
                 </div>
 
-                <div class="col-span-2 sm:col-span-1 rounded-xl bg-slate-50 p-2.5 border border-slate-100/80">
+                <div class="col-span-2 sm:col-span-1 rounded-xl bg-ocean-50 p-2.5 border border-slate-100/80">
                     <p class="text-[11px] text-slate-400 font-medium">Total Tagihan</p>
                     <p class="font-bold text-slate-900 mt-0.5 truncate">
                         Rp {{ number_format($booking->total_amount, 0, ',', '.') }}

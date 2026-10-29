@@ -18,7 +18,7 @@
          @keydown.arrow-left.window="if(activeModal !== null) prevImage()">
 
         {{-- Interactive Gallery Section --}}
-        <section class="bg-slate-950 py-4 sm:py-6">
+        <section class="relative bg-slate-950 pb-14 pt-4 sm:pb-20 sm:pt-6">
             <div class="container-page">
                 {{-- DESKTOP GRID LAYOUT --}}
                 <div class="hidden md:grid grid-cols-4 gap-3 h-[420px]">
@@ -100,6 +100,7 @@
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             </div>
+            <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0 z-[5]" />
         </section>
 
         {{-- Main Content & Sidebar Layout --}}
@@ -113,13 +114,13 @@
                         <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
                         {{ $tourPackage->destination->name }}
                     </a>
-                    <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight leading-snug">
+                    <h1 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight leading-snug">
                         {{ $tourPackage->name }}
                     </h1>
                     
                     {{-- Quick Highlights Info Cards --}}
                     <div class="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-700">
-                        <div class="bg-slate-50 border border-slate-100 p-3 rounded-2xl flex items-center gap-3">
+                        <div class="bg-ocean-50 border border-ocean-100 p-3 rounded-2xl flex items-center gap-3">
                             <div class="p-2 rounded-xl bg-emerald-100 text-emerald-700 shrink-0">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
@@ -129,7 +130,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-slate-50 border border-slate-100 p-3 rounded-2xl flex items-center gap-3">
+                        <div class="bg-ocean-50 border border-ocean-100 p-3 rounded-2xl flex items-center gap-3">
                             <div class="p-2 rounded-xl bg-emerald-100 text-emerald-700 shrink-0">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-3.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-4-4"/></svg>
                             </div>
@@ -163,18 +164,18 @@
 
                 {{-- Itinerary --}}
                 @if ($tourPackage->itineraries->isNotEmpty())
-                    <div class="pt-6 border-t border-slate-100" x-data="{ openDay: 1 }">
+                    <div class="pt-6 border-t border-ocean-100" x-data="{ openDay: 1 }">
                         <div class="mb-4">
                             <h2 class="text-xl font-bold text-slate-900">Rencana Perjalanan (Itinerary)</h2>
                             <p class="text-xs sm:text-sm text-slate-500">Ketuk hari untuk melihat rincian kegiatan tur Anda.</p>
                         </div>
-                        <div class="space-y-3">
+                        <div class="relative space-y-3 before:absolute before:left-[1.65rem] before:top-6 before:h-[calc(100%-3rem)] before:border-l-2 before:border-dashed before:border-ocean-500/40">
                             @foreach ($tourPackage->itineraries as $day)
-                                <div class="rounded-2xl border border-slate-200/80 bg-white overflow-hidden shadow-sm transition hover:border-emerald-300">
+                                <div class="rounded-2xl border border-ocean-100 bg-white overflow-hidden shadow-sm transition hover:border-emerald-300">
                                     <button @click="openDay = openDay === {{ $day->day_number }} ? null : {{ $day->day_number }}"
-                                            class="flex w-full items-center justify-between px-5 py-4 text-left font-bold text-slate-900 hover:bg-slate-50 transition">
+                                            class="flex w-full items-center justify-between px-5 py-4 text-left font-bold text-slate-900 hover:bg-ocean-50 transition">
                                         <span class="flex items-center gap-3 text-sm sm:text-base">
-                                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-xs text-emerald-800 font-extrabold">
+                                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-sun-400 text-xs text-navy font-extrabold shadow-sm">
                                                 H{{ $day->day_number }}
                                             </span>
                                             Hari {{ $day->day_number }} — {{ $day->title }}
@@ -185,7 +186,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                                         </svg>
                                     </button>
-                                    <div x-show="openDay === {{ $day->day_number }}" x-collapse x-cloak class="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                                    <div x-show="openDay === {{ $day->day_number }}" x-collapse x-cloak class="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-ocean-100 bg-ocean-50/60">
                                         {{ $day->description }}
                                     </div>
                                 </div>
@@ -195,7 +196,7 @@
                 @endif
 
                 {{-- Inclusions & Exclusions --}}
-                <div class="pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div class="pt-6 border-t border-ocean-100 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     @if ($tourPackage->inclusions->isNotEmpty())
                         <div class="rounded-2xl bg-emerald-50/60 p-5 border border-emerald-100">
                             <h3 class="font-bold text-slate-900 flex items-center gap-2">
@@ -233,12 +234,12 @@
 
                 {{-- Addons --}}
                 @if ($tourPackage->addons->isNotEmpty())
-                    <div class="pt-6 border-t border-slate-100">
+                    <div class="pt-6 border-t border-ocean-100">
                         <h3 class="text-xl font-bold text-slate-900">Layanan Tambahan (Opsional)</h3>
                         <p class="text-xs sm:text-sm text-slate-500 mb-4">Layanan ekstra yang dapat dipilih saat melakukan konfirmasi pesanan.</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             @foreach ($tourPackage->addons as $addon)
-                                <div class="rounded-2xl border border-slate-200 bg-white p-4 flex items-center justify-between gap-3 shadow-sm">
+                                <div class="rounded-3xl border border-slate-200 bg-white p-4 flex items-center justify-between gap-3 shadow-sm">
                                     <div>
                                         <p class="text-sm font-bold text-slate-900">{{ $addon->name }}</p>
                                         @if ($addon->description)
@@ -255,7 +256,7 @@
                 @endif
 
                 {{-- Reviews --}}
-                <div class="pt-6 border-t border-slate-100">
+                <div class="pt-6 border-t border-ocean-100">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <div>
                             <h3 class="text-xl font-bold text-slate-900">
@@ -272,7 +273,7 @@
                         @forelse ($tourPackage->reviews as $review)
                             <x-review-card :review="$review" />
                         @empty
-                            <div class="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200/60 sm:col-span-2">
+                            <div class="p-8 text-center bg-ocean-50 rounded-2xl border border-ocean-100 sm:col-span-2">
                                 <p class="text-sm font-medium text-slate-600">Belum ada ulasan untuk paket ini. Jadilah pemesan pertama!</p>
                             </div>
                         @endforelse
@@ -282,14 +283,14 @@
 
             {{-- Desktop Booking Sidebar (Hidden on Mobile) --}}
             <div class="hidden lg:block lg:col-span-1" id="booking-section">
-                <div class="sticky top-24 rounded-3xl bg-white p-6 border border-slate-200 shadow-xl shadow-slate-100/70 space-y-5">
-                    <div class="pb-4 border-b border-slate-100">
+                <div class="sticky top-24 rounded-3xl bg-white p-6 border border-slate-200 shadow-xl shadow-ocean-900/10 space-y-5">
+                    <div class="pb-4 border-b border-ocean-100">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Harga Per Orang</span>
                         <div class="mt-1 flex items-baseline gap-1">
-                            <span class="text-3xl font-extrabold text-emerald-600">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }}</span>
+                            <span class="text-3xl font-extrabold text-ocean-700">Rp {{ number_format($tourPackage->price_adult, 0, ',', '.') }}</span>
                             <span class="text-xs text-slate-500 font-medium">/ dewasa</span>
                         </div>
-                        <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                        <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-600 bg-ocean-50 p-2.5 rounded-xl border border-ocean-100">
                             <div>Anak: <span class="font-bold text-slate-800">Rp {{ number_format($tourPackage->price_child, 0, ',', '.') }}</span></div>
                             <div>Bayi: <span class="font-bold text-slate-800">Rp {{ number_format($tourPackage->price_infant, 0, ',', '.') }}</span></div>
                         </div>
@@ -303,32 +304,32 @@
 
                         <div class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
                             @forelse ($tourPackage->availabilities as $availability)
-                                <div class="flex items-center justify-between rounded-2xl border border-slate-200/80 p-3 text-sm transition hover:border-emerald-500 hover:bg-emerald-50/20">
+                                <div class="flex items-center justify-between rounded-2xl border border-ocean-100 p-3 text-sm transition hover:border-emerald-500 hover:bg-emerald-50/20">
                                     <div>
                                         <p class="font-bold text-slate-900">{{ $availability->departure_date->format('d M Y') }}</p>
                                         <p class="text-xs text-emerald-600 font-medium">Sisa {{ $availability->remaining_quota }} kursi</p>
                                     </div>
                                     @auth
                                         <a href="{{ route('booking.create', $availability) }}" 
-                                           class="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-emerald-500/20 hover:bg-emerald-500 transition active:scale-95">
+                                           class="rounded-xl bg-sun-400 px-4 py-2 text-xs font-bold text-navy font-extrabold shadow-md shadow-sun-500/30 hover:bg-sun-300 transition active:scale-95">
                                             Pesan
                                         </a>
                                     @else
                                         <a href="{{ route('login') }}" 
-                                           class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                                           class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-ocean-50 transition">
                                             Masuk
                                         </a>
                                     @endauth
                                 </div>
                             @empty
-                                <div class="p-4 text-center rounded-2xl bg-slate-50 border border-slate-100">
+                                <div class="p-4 text-center rounded-2xl bg-ocean-50 border border-ocean-100">
                                     <p class="text-xs text-slate-500">Belum ada jadwal keberangkatan mendatang yang dibuka.</p>
                                 </div>
                             @endforelse
                         </div>
                     </div>
 
-                    <div class="pt-2 border-t border-slate-100 text-center">
+                    <div class="pt-2 border-t border-ocean-100 text-center">
                         <p class="text-[11px] text-slate-400">
                             🔒 Pemesanan Aman & Tanpa Biaya Tersembunyi
                         </p>
@@ -337,19 +338,19 @@
             </div>
 
             {{-- Mobile Schedule Section (Only visible on Mobile inside content area) --}}
-            <div class="block lg:hidden pt-6 border-t border-slate-100" id="mobile-booking-section">
+            <div class="block lg:hidden pt-6 border-t border-ocean-100" id="mobile-booking-section">
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Pilih Tanggal Keberangkatan</h3>
                 <p class="text-xs text-slate-500 mb-4">Tentukan jadwal tanggal tur yang sesuai dengan rencana Anda.</p>
                 <div class="space-y-2.5">
                     @forelse ($tourPackage->availabilities as $availability)
-                        <div class="flex items-center justify-between rounded-2xl border border-slate-200 p-3.5 text-sm bg-slate-50">
+                        <div class="flex items-center justify-between rounded-2xl border border-slate-200 p-3.5 text-sm bg-ocean-50">
                             <div>
                                 <p class="font-bold text-slate-900">{{ $availability->departure_date->format('d M Y') }}</p>
                                 <p class="text-xs text-emerald-600 font-medium">Tersedia {{ $availability->remaining_quota }} slot</p>
                             </div>
                             @auth
                                 <a href="{{ route('booking.create', $availability) }}" 
-                                   class="rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-emerald-500/20 active:scale-95">
+                                   class="rounded-xl bg-sun-400 px-5 py-2.5 text-xs font-bold text-navy font-extrabold shadow-md shadow-sun-500/30 active:scale-95">
                                     Pesan Sekarang
                                 </a>
                             @else
@@ -360,7 +361,7 @@
                             @endauth
                         </div>
                     @empty
-                        <div class="p-4 text-center rounded-2xl bg-slate-50 border border-slate-100">
+                        <div class="p-4 text-center rounded-2xl bg-ocean-50 border border-ocean-100">
                             <p class="text-xs text-slate-500">Belum ada jadwal keberangkatan mendatang.</p>
                         </div>
                     @endforelse
@@ -381,7 +382,7 @@
                 </div>
                 
                 <a href="#mobile-booking-section" 
-                   class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 active:scale-95 transition">
+                   class="inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-xs font-bold text-navy font-extrabold shadow-lg shadow-sun-500/30 hover:bg-sun-300 active:scale-95 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     Pilih Jadwal
                 </a>

@@ -1,10 +1,11 @@
 <x-app-layout title="Destinasi Wisata">
     {{-- Header & Search Section --}}
-    <section class="border-b border-slate-200/60 bg-gradient-to-b from-slate-50 to-white py-12 sm:py-16">
-        <div class="container-page">
-            <span class="text-xs font-bold tracking-widest text-emerald-600 uppercase">Jelajahi Negeri</span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight">Destinasi Wisata</h1>
-            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl font-light">
+    <section class="relative overflow-hidden bg-gradient-to-b from-ocean-600 via-ocean-500 to-ocean-100 pb-28 pt-14 sm:pb-32 sm:pt-20">
+        <x-sky />
+        <div class="container-page relative z-10">
+            <span class="text-xs font-bold tracking-widest text-sun-300 uppercase">Jelajahi Negeri</span>
+            <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white mt-2 tracking-tight">Destinasi Wisata</h1>
+            <p class="mt-3 text-base sm:text-lg text-white/90 max-w-2xl font-medium">
                 Dari dataran tinggi pegunungan hingga pesona terumbu karang — temukan wilayah dan keindahan lokasi liburan Anda berikutnya.
             </p>
 
@@ -34,6 +35,7 @@
                 </div>
             </form>
         </div>
+        <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0" />
     </section>
 
     {{-- Destinations Grid Section --}}
@@ -55,7 +57,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 @foreach ($destinations as $destination)
-                    <x-destination-card :destination="$destination" />
+                    <div data-reveal class="h-full [&>*]:h-full"><x-destination-card :destination="$destination" /></div>
                 @endforeach
             </div>
 

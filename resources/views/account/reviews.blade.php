@@ -11,7 +11,7 @@
 
                 <div class="space-y-4" x-data="{ openBooking: null }">
                     @foreach ($reviewableBookings as $booking)
-                        <div class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition">
+                        <div class="rounded-3xl border border-ocean-100 bg-white p-5 shadow-sm transition">
                             {{-- Header Item --}}
                             <div class="flex items-center justify-between gap-4">
                                 <div class="min-w-0 space-y-0.5">
@@ -24,7 +24,7 @@
                                 </div>
                                 <button type="button"
                                         @click="openBooking = openBooking === {{ $booking->id }} ? null : {{ $booking->id }}" 
-                                        class="shrink-0 inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition">
+                                        class="shrink-0 inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-ocean-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition">
                                     <span x-text="openBooking === {{ $booking->id }} ? 'Batal' : 'Tulis Ulasan'"></span>
                                 </button>
                             </div>
@@ -34,7 +34,7 @@
                                  x-cloak 
                                  x-collapse
                                  x-data="{ rating: 5 }" 
-                                 class="mt-5 border-t border-slate-100 pt-5 space-y-4">
+                                 class="mt-5 border-t border-ocean-100 pt-5 space-y-4">
                                 
                                 <form method="POST" action="{{ route('account.reviews.store') }}" class="space-y-4">
                                     @csrf
@@ -79,7 +79,7 @@
                                     </div>
 
                                     <button type="submit" 
-                                            class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 active:scale-[0.99] transition">
+                                            class="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-5 py-2.5 text-xs font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 active:scale-[0.99] transition">
                                         <span>Kirim Ulasan</span>
                                         <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -108,7 +108,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     @foreach ($myReviews as $review)
-                        <div class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm space-y-3 flex flex-col justify-between">
+                        <div class="rounded-3xl border border-ocean-100 bg-white p-5 shadow-sm space-y-3 flex flex-col justify-between">
                             <div class="space-y-2">
                                 <div class="flex items-start justify-between gap-3">
                                     <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-600 line-clamp-1">
@@ -141,7 +141,7 @@
                                 </p>
                             </div>
 
-                            <p class="text-[10px] text-slate-400 font-medium pt-2 border-t border-slate-100">
+                            <p class="text-[10px] text-slate-400 font-medium pt-2 border-t border-ocean-100">
                                 Dikirakan pada {{ $review->created_at->format('d M Y') }}
                             </p>
                         </div>

@@ -16,6 +16,15 @@
     x-init="refreshEstimate(); {{ $errors->any() || session('error') ? 'step = ' . ($errors->has('name') || $errors->has('phone') || $errors->has('address') || $errors->has('identity_number') || $errors->has('date_of_birth') ? 3 : ($errors->has('adult_count') || $errors->has('child_count') || $errors->has('infant_count') ? 2 : 5)) . ';' : '' }}"
     class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
 >
+    {{-- Banner perjalanan --}}
+    <div class="relative mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-r from-ocean-600 via-ocean-500 to-ocean-700 p-6 text-white shadow-xl shadow-ocean-900/20 sm:p-8">
+        <x-sky />
+        <div class="relative z-10">
+            <p class="text-xs font-bold uppercase tracking-[.2em] text-sun-300">Langkah menuju liburan</p>
+            <h2 class="font-display mt-1 text-2xl font-extrabold sm:text-3xl">{{ $tourPackage->name }}</h2>
+        </div>
+    </div>
+
     {{-- Error banner: shown regardless of which step Alpine lands on after a
          failed submit, so a rejected booking is never silently invisible. --}}
     @if (session('error'))
@@ -65,13 +74,13 @@
             <div class="lg:col-span-2 space-y-6">
 
                 {{-- Step 1: Trip Summary --}}
-                <div x-show="step === 1" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
-                    <div class="border-b border-slate-100 pb-4 mb-6">
+                <div x-show="step === 1" x-cloak class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-ocean-100 pb-4 mb-6">
                         <h2 class="text-xl font-bold text-slate-900">Detail Perjalanan</h2>
                         <p class="text-xs text-slate-500 mt-0.5">Konfirmasi tanggal dan durasi tur pilihan Anda.</p>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-5 p-4 rounded-2xl bg-slate-50/80 border border-slate-100">
+                    <div class="flex flex-col sm:flex-row gap-5 p-4 rounded-2xl bg-slate-50/80 border border-ocean-100">
                         <img src="{{ $tourPackage->cover_image ? asset('storage/'.$tourPackage->cover_image) : 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=400&q=80' }}"
                              class="h-28 w-full sm:w-36 shrink-0 rounded-xl object-cover shadow-sm" alt="{{ $tourPackage->name }}">
                         <div class="flex flex-col justify-between">
@@ -81,7 +90,7 @@
                                 <p class="text-xs font-medium text-slate-500 mt-1">{{ $tourPackage->duration_days }} Hari / {{ $tourPackage->duration_nights }} Malam</p>
                             </div>
                             
-                            <div class="mt-3 pt-3 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div class="mt-3 pt-3 border-t border-ocean-100 flex flex-wrap items-center justify-between gap-2 text-xs">
                                 <div class="text-slate-600">
                                     <span class="font-bold text-slate-900">{{ $availability->departure_date->format('d M Y') }}</span> 
                                     <span class="text-slate-400 mx-1">—</span> 
@@ -96,7 +105,7 @@
                     </div>
 
                     <div class="mt-8 flex justify-end">
-                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-sm font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">
                             Lanjutkan
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>
@@ -104,8 +113,8 @@
                 </div>
 
                 {{-- Step 2: Peserta --}}
-                <div x-show="step === 2" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
-                    <div class="border-b border-slate-100 pb-4 mb-6">
+                <div x-show="step === 2" x-cloak class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-ocean-100 pb-4 mb-6">
                         <h2 class="text-xl font-bold text-slate-900">Jumlah Peserta</h2>
                         <p class="text-xs text-slate-500 mt-0.5">Tentukan jumlah orang yang akan ikut dalam perjalanan ini.</p>
                     </div>
@@ -121,7 +130,7 @@
                                 <p class="text-sm font-bold text-slate-900">{{ $p['label'] }}</p>
                                 <p class="text-xs text-slate-400 mt-0.5">{{ $p['desc'] }}</p>
                             </div>
-                            <div class="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border border-slate-200/60">
+                            <div class="flex items-center gap-3 bg-ocean-50 p-1.5 rounded-2xl border border-ocean-100">
                                 <button type="button" @click="dec('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm border border-slate-200 hover:bg-slate-100 transition disabled:opacity-40" :disabled="counts.{{ $p['key'] }} <= ({{ $p['key'] === 'adult' ? 1 : 0 }})">−</button>
                                 <span class="w-7 text-center font-bold text-sm text-slate-900" x-text="counts.{{ $p['key'] }}"></span>
                                 <button type="button" @click="inc('{{ $p['key'] }}')" class="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm border border-slate-200 hover:bg-slate-100 transition">+</button>
@@ -146,8 +155,8 @@
                 </div>
 
                 {{-- Step 3: Customer Information --}}
-                <div x-show="step === 3" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
-                    <div class="border-b border-slate-100 pb-4 mb-6">
+                <div x-show="step === 3" x-cloak class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-ocean-100 pb-4 mb-6">
                         <h2 class="text-xl font-bold text-slate-900">Data Diri Pemesan</h2>
                         <p class="text-xs text-slate-500 mt-0.5">Informasi ini digunakan untuk konfirmasi pesanan dan e-tiket.</p>
                     </div>
@@ -159,7 +168,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email</label>
-                            <input type="email" value="{{ auth()->user()->email }}" disabled class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed">
+                            <input type="email" value="{{ auth()->user()->email }}" disabled class="w-full rounded-xl border border-slate-200 bg-ocean-50 px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Telepon / WA</label>
@@ -185,13 +194,13 @@
 
                     <div class="mt-8 flex justify-between items-center">
                         <button type="button" @click="step = 2" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
-                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">Lanjutkan</button>
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-sm font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">Lanjutkan</button>
                     </div>
                 </div>
 
                 {{-- Step 4: Add-ons --}}
-                <div x-show="step === 4" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
-                    <div class="border-b border-slate-100 pb-4 mb-6">
+                <div x-show="step === 4" x-cloak class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-ocean-100 pb-4 mb-6">
                         <h2 class="text-xl font-bold text-slate-900">Layanan Tambahan</h2>
                         <p class="text-xs text-slate-500 mt-0.5">Pilih fasilitas & perlengkapan ekstra untuk menyempurnakan tur Anda.</p>
                     </div>
@@ -204,7 +213,7 @@
                         </template>
                         <template x-for="addon in addons" :key="addon.id">
                             <label class="flex items-center justify-between rounded-2xl border p-4 cursor-pointer transition-all duration-200"
-                                   :class="selectedAddons[addon.id] ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-slate-200/80 hover:border-slate-300'">
+                                   :class="selectedAddons[addon.id] ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500/20' : 'border-ocean-100 hover:border-slate-300'">
                                 <div class="flex items-center gap-3.5">
                                     <input type="checkbox" :checked="!!selectedAddons[addon.id]" @change="toggleAddon(addon.id)" class="h-5 w-5 rounded-md text-emerald-600 focus:ring-emerald-500 border-slate-300">
                                     <div>
@@ -237,13 +246,13 @@
 
                     <div class="mt-8 flex justify-between items-center">
                         <button type="button" @click="step = 3" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 transition">Kembali</button>
-                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition">Lanjutkan</button>
+                        <button type="button" @click="goNext()" class="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-sm font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">Lanjutkan</button>
                     </div>
                 </div>
 
                 {{-- Step 5: Review & Confirm --}}
-                <div x-show="step === 5" x-cloak class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm">
-                    <div class="border-b border-slate-100 pb-4 mb-6">
+                <div x-show="step === 5" x-cloak class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm">
+                    <div class="border-b border-ocean-100 pb-4 mb-6">
                         <h2 class="text-xl font-bold text-slate-900">Periksa & Konfirmasi</h2>
                         <p class="text-xs text-slate-500 mt-0.5">Gunakan kode promo dan setujui ketentuan untuk menyelesaikan pemesanan.</p>
                     </div>
@@ -257,7 +266,7 @@
                             <p class="mt-2 text-xs font-semibold" x-show="promoMessage" :class="promoMessage && promoMessage.type === 'applied' ? 'text-emerald-600' : 'text-red-600'" x-text="promoMessage ? promoMessage.text : ''"></p>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-100">
+                        <div class="pt-4 border-t border-ocean-100">
                             <label for="terms" class="flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" name="terms" required id="terms" class="mt-0.5 h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
                                 <span class="text-xs text-slate-600 leading-relaxed">
@@ -282,8 +291,8 @@
 
             {{-- Live Order Summary Sidebar --}}
             <div class="lg:col-span-1">
-                <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sticky top-24">
-                    <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Ringkasan Biaya</h3>
+                <div class="rounded-3xl border border-ocean-100 bg-white p-6 shadow-sm sticky top-24">
+                    <h3 class="text-base font-bold text-slate-900 border-b border-ocean-100 pb-3">Ringkasan Biaya</h3>
                     
                     <div class="mt-4 space-y-2.5 text-xs">
                         <div class="flex justify-between items-center">
@@ -306,7 +315,7 @@
                             <span class="font-semibold text-slate-900" x-text="formatRp(estimate?.addons_total || 0)"></span>
                         </div>
 
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-2.5">
+                        <div class="flex justify-between items-center border-t border-ocean-100 pt-2.5">
                             <span class="text-slate-500 font-medium">Subtotal</span>
                             <span class="font-bold text-slate-900" x-text="formatRp(estimate?.subtotal || 0)"></span>
                         </div>
@@ -316,13 +325,13 @@
                             <span x-text="'- ' + formatRp(estimate?.discount_amount || 0)"></span>
                         </div>
 
-                        <div class="flex justify-between items-baseline border-t border-slate-200/80 pt-3 text-sm font-bold text-slate-900">
+                        <div class="flex justify-between items-baseline border-t border-ocean-100 pt-3 text-sm font-bold text-slate-900">
                             <span>Total Biaya</span>
                             <span class="text-lg font-extrabold text-emerald-600" x-text="formatRp(estimate?.total_amount || 0)"></span>
                         </div>
                     </div>
 
-                    <div class="mt-5 rounded-2xl bg-slate-50 p-3 text-[11px] text-slate-400 border border-slate-100 leading-relaxed">
+                    <div class="mt-5 rounded-2xl bg-ocean-50 p-3 text-[11px] text-slate-400 border border-ocean-100 leading-relaxed">
                         Kalkulasi akhir akan diverifikasi kembali secara otomatis oleh server sebelum reservasi Anda dibuat.
                     </div>
                 </div>

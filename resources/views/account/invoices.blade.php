@@ -14,7 +14,7 @@
                 description="Tagihan akan dibuat secara otomatis saat Anda melakukan pemesanan paket wisata.">
                 <x-slot:action>
                     <a href="{{ route('tours.index') }}" 
-                       class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 transition">
+                       class="inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-5 py-2.5 text-xs font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">
                         <span>Jelajahi Paket Wisata</span>
                         <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

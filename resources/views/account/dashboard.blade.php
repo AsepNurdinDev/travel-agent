@@ -2,7 +2,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
         {{-- Welcome Hero Banner --}}
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 p-6 sm:p-8 text-white shadow-md">
+        <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-ocean-600 via-ocean-500 to-ocean-700 p-6 sm:p-10 text-white shadow-xl shadow-ocean-900/20">
+            <x-sky />
             {{-- Decorative Background Circle --}}
             <div class="absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
             <div class="absolute right-20 -top-10 h-32 w-32 rounded-full bg-emerald-400/20 blur-xl pointer-events-none"></div>
@@ -12,7 +13,7 @@
                     <span class="h-2 w-2 rounded-full bg-emerald-300 animate-pulse"></span>
                     Dashboard Pelanggan
                 </span>
-                <h1 class="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <h1 class="mt-3 font-display text-2xl sm:text-4xl font-extrabold tracking-tight">
                     Selamat datang kembali, {{ Str::of(auth()->user()->name)->before(' ') }}! 👋
                 </h1>
                 <p class="mt-2 text-sm text-emerald-100/90 leading-relaxed">
@@ -53,7 +54,7 @@
             @endphp
 
             @foreach ($statsConfig as $card)
-                <div class="group relative rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+                <div class="group relative rounded-3xl border border-ocean-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                     <div class="flex items-center justify-between">
                         <div class="flex h-10 w-10 items-center justify-center rounded-2xl {{ $card['bg'] }} transition-transform duration-200 group-hover:scale-110">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -110,7 +111,7 @@
 
         {{-- Recent Bookings Section --}}
         <div class="space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center justify-between border-b border-ocean-100 pb-3">
                 <h2 class="text-base font-bold text-slate-900">Pesanan Terbaru</h2>
                 <a href="{{ route('account.bookings') }}" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 transition">
                     <span>Lihat Semua</span>
@@ -124,7 +125,7 @@
                 <x-empty-state title="Belum Ada Pesanan" description="Siap untuk petualangan berikutnya? Jelajahi berbagai paket wisata menarik kami.">
                     <x-slot:action>
                         <a href="{{ route('tours.index') }}" 
-                           class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 transition">
+                           class="inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-5 py-2.5 text-xs font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">
                             Cari Paket Wisata
                         </a>
                     </x-slot:action>

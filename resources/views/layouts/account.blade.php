@@ -1,5 +1,15 @@
 <x-app-layout :title="$title ?? 'Akun Saya'">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+    {{-- Banner langit akun --}}
+    <div class="relative overflow-hidden bg-gradient-to-r from-ocean-600 via-ocean-500 to-ocean-700 pb-24 pt-8 text-white sm:pt-10">
+        <x-sky />
+        <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <p class="text-xs font-bold uppercase tracking-[.2em] text-sun-300">Akun Saya</p>
+            <h2 class="font-display mt-1 text-3xl font-extrabold sm:text-4xl">{{ $title ?? 'Akun Saya' }}</h2>
+        </div>
+        <x-wave color="#F8FAFC" class="absolute inset-x-0 bottom-0" />
+    </div>
+
+    <div class="-mt-10 mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8 relative z-10">
         
         {{-- Main Grid Wrapper with Alpine Drawer State --}}
         <div x-data="{ 
@@ -16,14 +26,14 @@
              class="lg:grid lg:grid-cols-[260px_1fr] lg:gap-8 lg:items-start">
 
             {{-- Mobile Header & Trigger Button --}}
-            <div class="mb-6 flex items-center justify-between rounded-2xl border border-slate-100 bg-white p-4 shadow-sm lg:hidden">
+            <div class="mb-6 flex items-center justify-between rounded-3xl border border-ocean-100 bg-white p-4 shadow-sm lg:hidden">
                 <div>
                     <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Pengaturan</span>
                     <h1 class="text-lg font-extrabold text-slate-900 tracking-tight">{{ $title ?? 'Akun Saya' }}</h1>
                 </div>
                 <button type="button" 
                         @click="toggleDrawer()" 
-                        class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 active:scale-95 transition">
+                        class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-ocean-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 active:scale-95 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -33,7 +43,7 @@
 
             {{-- Desktop Sticky Sidebar --}}
             <aside class="hidden lg:block lg:sticky lg:top-24">
-                <div class="rounded-3xl border border-slate-100 bg-white p-4 shadow-sm">
+                <div class="rounded-3xl border border-ocean-100 bg-white p-4 shadow-sm">
                     <x-account-sidebar />
                 </div>
             </aside>
@@ -58,7 +68,7 @@
                 <div class="fixed inset-y-0 left-0 flex w-full max-w-xs flex-col bg-white shadow-2xl">
                     
                     {{-- Drawer Header --}}
-                    <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                    <div class="flex items-center justify-between border-b border-ocean-100 px-5 py-4">
                         <div class="flex items-center gap-2">
                             <div class="h-2 w-2 rounded-full bg-emerald-500"></div>
                             <span class="text-sm font-bold text-slate-900">Menu Akun</span>

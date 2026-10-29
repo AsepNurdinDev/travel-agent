@@ -24,7 +24,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
         {{-- Brand Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3 group shrink-0 focus:outline-none">
             <div
-                class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/60 p-1.5 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-500/30 group-hover:shadow-md group-hover:shadow-emerald-500/10">
+                class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-ocean-50 border border-ocean-100 p-1.5 shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-500/30 group-hover:shadow-md group-hover:shadow-emerald-500/10">
                 <img src="{{ asset('img/logo.png') }}"
                     alt="{{ \App\Models\Setting::getValue('site_name', 'Nusantara Journeys') }}"
                     class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110">
@@ -55,7 +55,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
             @auth
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" @click.outside="open = false"
-                        class="flex items-center gap-2.5 rounded-full border border-slate-200/80 bg-white/80 p-1 pr-3 text-xs font-semibold text-slate-800 shadow-sm transition-all duration-300 hover:border-emerald-500/40 hover:shadow-md hover:bg-white focus:outline-none">
+                        class="flex items-center gap-2.5 rounded-full border border-ocean-100 bg-white/80 p-1 pr-3 text-xs font-semibold text-slate-800 shadow-sm transition-all duration-300 hover:border-emerald-500/40 hover:shadow-md hover:bg-white focus:outline-none">
                         <span
                             class="flex h-8 w-8 items-center justify-center rounded-full bg-sun-400 text-navy font-extrabold shadow-sm">
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
@@ -74,9 +74,9 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
                         x-transition:leave="transition ease-in duration-150"
                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                         x-transition:leave-end="opacity-0 scale-95 -translate-y-2" x-cloak
-                        class="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-100 bg-white p-2 shadow-xl shadow-slate-900/10">
+                        class="absolute right-0 mt-3 w-56 rounded-3xl border border-ocean-100 bg-white p-2 shadow-xl shadow-slate-900/10">
 
-                        <div class="px-3 py-2 border-b border-slate-100 mb-1">
+                        <div class="px-3 py-2 border-b border-ocean-100 mb-1">
                             <p class="text-xs font-bold text-slate-900 truncate">{{ auth()->user()->name }}</p>
                             <p class="text-[11px] text-slate-400 truncate">{{ auth()->user()->email }}</p>
                         </div>
@@ -98,7 +98,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
                             Pengaturan Akun
                         </a>
 
-                        <div class="my-1 border-t border-slate-100"></div>
+                        <div class="my-1 border-t border-ocean-100"></div>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -123,7 +123,7 @@ window.addEventListener('scroll', () => scrolled = window.scrollY > 15)"
 
         {{-- Mobile Hamburger Button (Mengirim Event Global ke Alpine) --}}
         <button @click="$dispatch('toggle-mobile-menu')"
-            class="lg:hidden relative h-10 w-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-700 hover:bg-slate-200/70 transition-colors duration-200 focus:outline-none flex items-center justify-center shrink-0"
+            class="lg:hidden relative h-10 w-10 rounded-xl bg-slate-100 border border-ocean-100 text-slate-700 hover:bg-slate-200/70 transition-colors duration-200 focus:outline-none flex items-center justify-center shrink-0"
             aria-label="Toggle Navigation">
             <svg class="h-6 w-6 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                 stroke-width="2">

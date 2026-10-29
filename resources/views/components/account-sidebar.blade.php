@@ -8,8 +8,8 @@
         ['route' => 'account.password', 'label' => 'Change Kata Sandi', 'icon' => 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'],
     ];
 @endphp
-<div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-2">
-    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 text-primary font-bold">
+<div class="flex items-center gap-3 border-b border-ocean-100 pb-4 mb-2">
+    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-sun-400 text-navy font-extrabold">
         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
     </span>
     <div class="min-w-0">
@@ -20,7 +20,7 @@
 <nav class="flex flex-col gap-1 py-2">
     @foreach ($accountLinks as $link)
         <a href="{{ route($link['route']) }}"
-           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition {{ request()->routeIs($link['route']) ? 'bg-primary text-white' : 'text-ink hover:bg-primary-50 hover:text-primary' }}">
+           class="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-sm font-semibold transition {{ request()->routeIs($link['route']) ? 'bg-ocean-600 text-white shadow-lg shadow-ocean-900/20' : 'text-ink hover:bg-primary-50 hover:text-primary' }}">
             <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $link['icon'] }}"/>
             </svg>
@@ -28,7 +28,7 @@
         </a>
     @endforeach
 </nav>
-<form method="POST" action="{{ route('logout') }}" class="border-t border-slate-100 pt-2 mt-2">
+<form method="POST" action="{{ route('logout') }}" class="border-t border-ocean-100 pt-2 mt-2">
     @csrf
     <button type="submit" class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50">
         <svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>

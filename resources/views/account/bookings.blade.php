@@ -8,7 +8,7 @@
         </div>
 
         {{-- Horizontal Tab Filter --}}
-        <div class="flex items-center gap-2 overflow-x-auto border-b border-slate-100 pb-3 no-scrollbar">
+        <div class="flex items-center gap-2 overflow-x-auto border-b border-ocean-100 pb-3 no-scrollbar">
             @php
                 $tabs = [
                     'all' => 'Semua',
@@ -20,7 +20,7 @@
 
             @foreach ($tabs as $key => $label)
                 <a href="{{ route('account.bookings', ['tab' => $key]) }}"
-                   class="shrink-0 inline-flex items-center justify-center rounded-xl px-4 py-2 text-xs font-bold transition-all duration-200 {{ $tab === $key ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/60 hover:text-slate-900' }}">
+                   class="shrink-0 inline-flex items-center justify-center rounded-xl px-4 py-2 text-xs font-bold transition-all duration-200 {{ $tab === $key ? 'bg-sun-400 text-navy font-extrabold shadow-sm' : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/60 hover:text-slate-900' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -33,7 +33,7 @@
                 description="Belum ada riwayat pesanan untuk kategori ini. Siap untuk menjelajahi tempat baru?">
                 <x-slot:action>
                     <a href="{{ route('tours.index') }}" 
-                       class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 transition">
+                       class="inline-flex items-center justify-center gap-2 rounded-xl bg-sun-400 px-5 py-2.5 text-xs font-bold text-navy font-extrabold shadow-sm hover:bg-sun-300 transition">
                         <span>Jelajahi Paket Wisata</span>
                         <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

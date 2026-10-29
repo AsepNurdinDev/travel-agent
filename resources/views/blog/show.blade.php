@@ -8,6 +8,8 @@
                  alt="{{ $blogPost->title }}">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
 
+            <x-wave color="#ffffff" class="absolute inset-x-0 bottom-0 z-[5]" />
+
             {{-- Title & Meta Container --}}
             <div class="container-page relative z-10 w-full max-w-4xl mx-auto pb-10 pt-20">
                 <a href="{{ route('blog.index') }}" 
@@ -65,7 +67,7 @@
                 </div>
 
                 {{-- Article Footer Nav --}}
-                <div class="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
+                <div class="mt-12 pt-8 border-t border-ocean-100 flex items-center justify-between">
                     <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-emerald-600 transition">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -79,7 +81,7 @@
 
     {{-- Related Articles Section --}}
     @if ($relatedPosts->isNotEmpty())
-    <section class="bg-slate-50 border-t border-slate-200/60 py-16">
+    <section class="bg-ocean-50 border-t border-ocean-100 py-16">
         <div class="container-page">
             <div class="flex items-center justify-between mb-8">
                 <div>

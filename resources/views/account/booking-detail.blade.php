@@ -13,10 +13,10 @@
         </div>
 
         {{-- Main Booking Info Card --}}
-        <div class="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="rounded-3xl border border-ocean-100 bg-white p-6 sm:p-8 shadow-sm space-y-6">
             
             {{-- Header: Booking Code, Tour Title & Status --}}
-            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-slate-100 pb-6">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-ocean-100 pb-6">
                 <div class="space-y-1">
                     <span class="font-mono text-xs font-extrabold tracking-wider text-emerald-600 uppercase">
                         {{ $booking->booking_code }}
@@ -32,28 +32,28 @@
 
             {{-- Metadata Grid --}}
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div class="rounded-2xl bg-slate-50 p-3.5 border border-slate-100/80">
+                <div class="rounded-2xl bg-ocean-50 p-3.5 border border-slate-100/80">
                     <p class="text-slate-400 font-medium">Destinasi</p>
                     <p class="font-bold text-slate-900 text-sm mt-0.5 truncate">
                         {{ $booking->tourPackage->destination->name ?? '—' }}
                     </p>
                 </div>
 
-                <div class="rounded-2xl bg-slate-50 p-3.5 border border-slate-100/80">
+                <div class="rounded-2xl bg-ocean-50 p-3.5 border border-slate-100/80">
                     <p class="text-slate-400 font-medium">Keberangkatan</p>
                     <p class="font-bold text-slate-900 text-sm mt-0.5">
                         {{ optional($booking->availability)->departure_date?->format('d M Y') ?? '—' }}
                     </p>
                 </div>
 
-                <div class="rounded-2xl bg-slate-50 p-3.5 border border-slate-100/80">
+                <div class="rounded-2xl bg-ocean-50 p-3.5 border border-slate-100/80">
                     <p class="text-slate-400 font-medium">Kepulangan</p>
                     <p class="font-bold text-slate-900 text-sm mt-0.5">
                         {{ optional($booking->availability)->return_date?->format('d M Y') ?? '—' }}
                     </p>
                 </div>
 
-                <div class="rounded-2xl bg-slate-50 p-3.5 border border-slate-100/80">
+                <div class="rounded-2xl bg-ocean-50 p-3.5 border border-slate-100/80">
                     <p class="text-slate-400 font-medium">Tanggal Dipesan</p>
                     <p class="font-bold text-slate-900 text-sm mt-0.5">
                         {{ $booking->created_at->format('d M Y') }}
@@ -62,7 +62,7 @@
             </div>
 
             {{-- Participants Section --}}
-            <div class="border-t border-slate-100 pt-5 space-y-2">
+            <div class="border-t border-ocean-100 pt-5 space-y-2">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Jumlah Peserta</h3>
                 <div class="flex flex-wrap gap-2 text-xs">
                     <span class="inline-flex items-center gap-1.5 rounded-xl bg-slate-100 px-3 py-1.5 font-medium text-slate-700">
@@ -82,7 +82,7 @@
 
             {{-- Add-ons Section --}}
             @if ($booking->items->isNotEmpty())
-                <div class="border-t border-slate-100 pt-5 space-y-2.5">
+                <div class="border-t border-ocean-100 pt-5 space-y-2.5">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Layanan Tambahan (Add-ons)</h3>
                     <ul class="space-y-2 text-xs divide-y divide-slate-100">
                         @foreach ($booking->items as $item)
@@ -97,9 +97,9 @@
 
             {{-- Notes Section --}}
             @if ($booking->notes)
-                <div class="border-t border-slate-100 pt-5 space-y-1.5">
+                <div class="border-t border-ocean-100 pt-5 space-y-1.5">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Catatan Pesanan</h3>
-                    <div class="rounded-2xl bg-slate-50 p-4 border border-slate-100 text-xs text-slate-600 leading-relaxed">
+                    <div class="rounded-2xl bg-ocean-50 p-4 border border-ocean-100 text-xs text-slate-600 leading-relaxed">
                         {{ $booking->notes }}
                     </div>
                 </div>
@@ -107,7 +107,7 @@
 
             {{-- Action Buttons --}}
             @if (!in_array($booking->status, ['cancelled', 'completed']))
-                <div class="border-t border-slate-100 pt-5 flex flex-wrap items-center gap-3">
+                <div class="border-t border-ocean-100 pt-5 flex flex-wrap items-center gap-3">
                     @if ((float) $booking->balance_due > 0)
                         <a href="{{ route('booking.checkout', $booking) }}" 
                            class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-amber-600 transition">
@@ -139,8 +139,8 @@
             <x-price-breakdown :booking="$booking" />
 
             {{-- Payment History Card --}}
-            <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="rounded-3xl border border-ocean-100 bg-white p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-ocean-100 pb-3">
                     <div>
                         <h3 class="text-base font-bold text-slate-900">Riwayat Pembayaran</h3>
                         <p class="text-xs text-slate-400 mt-0.5">Daftar transaksi untuk pesanan ini.</p>
@@ -157,7 +157,7 @@
                     @forelse ($booking->payments as $payment)
                         <x-payment-card :payment="$payment" />
                     @empty
-                        <div class="rounded-2xl bg-slate-50 p-6 text-center text-xs text-slate-400 border border-slate-100">
+                        <div class="rounded-2xl bg-ocean-50 p-6 text-center text-xs text-slate-400 border border-ocean-100">
                             Belum ada riwayat pembayaran yang tercatat.
                         </div>
                     @endforelse
